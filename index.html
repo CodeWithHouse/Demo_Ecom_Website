@@ -14,7 +14,7 @@
         <div class="header-container">
             <div class="logo">
                 <a href="index.html">
-                    <img src="assets/logo/petcircle-app-icon.svg" alt="PawsomeShop Logo">
+                    <img src="assets/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
                 </a>
             </div>
             <nav>
@@ -23,11 +23,12 @@
                     <li class="dropdown">
                         <a href="#">Products <i class="fas fa-chevron-down"></i></a>
                         <div class="dropdown-content">
-                            <a href="#">Dogs</a>
-                            <a href="#">Cats</a>
-                            <a href="#">Fish</a>
-                            <a href="#">Birds</a>
-                            <a href="#">Small Pets</a>
+                            <a href="#">Dog</a>
+                            <a href="#">Cat</a>
+                            <a href="#">Other Pets</a>
+                            <a href="#">Pharmacy</a>
+                            <a href="#">Insurance</a>
+                            <a href="#">Deals</a>
                         </div>
                     </li>
                     <li><a href="#">About Us</a></li>
@@ -53,14 +54,37 @@
     </header>
 
     <main>
-        <!-- Hero Banner -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Treat Your Pet to the Best</h1>
-                <p>Quality products for all your furry, feathery, and scaly friends.</p>
-                <a href="#featured" class="btn primary-btn">Shop Now</a>
+        <!-- Hero Banner Carousel -->
+        <section class="hero-carousel">
+            <div class="carousel-container">
+               <div class="carousel-slide active">
+                <img src="assets/banners/4_Carousel_Desktop_Paw-and-Spoon.jpg" alt="Banner 1">
+                <div class="hero-content">
+                    <a href="#featured" class="btn primary-btn">Shop Now</a>
+                </div>
             </div>
-        </section>
+            <div class="carousel-slide">
+                <img src="assets/banners/Carousel_Desktop_App.jpg" alt="Banner 2">
+                <div class="hero-content">
+                    <a href="#featured" class="btn primary-btn">Shop Now</a>
+                </div>
+            </div>
+        </div>
+            
+            <!-- Carousel Navigation -->
+            <div class="carousel-nav">
+                <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0"></button>
+                <button class="indicator" data-slide="1"></button>
+                <button class="indicator" data-slide="2"></button>
+            </div>
+        </div>
+    </section>  
 
         <!-- Featured Products -->
         <section id="featured" class="featured-products">
