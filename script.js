@@ -323,3 +323,78 @@ function initAddToCart() {
         });
     });
 }
+
+// Hero Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the carousel
+    const carousel = {
+        container: document.querySelector('.carousel-container'),
+        slides: document.querySelectorAll('.carousel-slide'),
+        indicators: document.querySelectorAll('.carousel-indicators .indicator'),
+        prevBtn: document.querySelector('.prev-btn'),
+        nextBtn: document.querySelector('.next-btn'),
+        currentIndex: 0,
+        interval: null,
+        autoPlayDuration: 5000, // 5 seconds per slide
+        
+        init: function() {
+            // Initialize event listeners
+            this.prevBtn.addEventListener('click', () => this.prevSlide());
+            this.nextBtn.addEventListener('click', () => this.nextSlide());
+            
+            // Setup indicator clicks
+            this.indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => this.goToSlide(index));
+            });
+            
+            // Start autoplay
+            this.startAutoplay();
+            
+            // Pause autoplay on hover
+            this.container.addEventListener('mouseenter', () => this.stopAutoplay());
+            this.container.addEventListener('mouseleave', () => this.startAutoplay());
+        },
+        
+        goToSlide: function(index) {
+            // Remove active class from current slide and indicator
+            this.slides[this.currentIndex].classList.remove('active');
+            this.indicators[this.currentIndex].classList.remove('active');
+            
+            // Update current index
+            this.currentIndex = index;
+            if (this.currentIndex < 0) {
+                this.currentIndex = this.slides.length - 1;
+            } else if (this.currentIndex >= this.slides.length) {
+                this.currentIndex = 0;
+            }
+            
+            // Add active class to new slide and indicator
+            this.slides[this.currentIndex].classList.add('active');
+            this.indicators[this.currentIndex].classList.add('active');
+        },
+        
+        nextSlide: function() {
+            this.goToSlide(this.currentIndex + 1);
+        },
+        
+        prevSlide: function() {
+            this.goToSlide(this.currentIndex - 1);
+        },
+        
+        startAutoplay: function() {
+            this.stopAutoplay(); // Clear any existing interval
+            this.interval = setInterval(() => this.nextSlide(), this.autoPlayDuration);
+        },
+        
+        stopAutoplay: function() {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+        }
+    };
+    
+    // Check if carousel exists before initializing
+    if (carousel.container) {
+        carousel.init();
+    }
+});
