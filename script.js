@@ -335,12 +335,15 @@ document.addEventListener('DOMContentLoaded', function() {
         nextBtn: document.querySelector('.next-btn'),
         currentIndex: 0,
         interval: null,
-        autoPlayDuration: 3000, // 5 seconds per slide
+        autoPlayDuration: 3000, // 3 seconds per slide
         
         init: function() {
+            // If no slides, exit early
+            if (this.slides.length === 0) return;
+            
             // Initialize event listeners
-            this.prevBtn.addEventListener('click', () => this.prevSlide());
-            this.nextBtn.addEventListener('click', () => this.nextSlide());
+            if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prevSlide());
+            if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextSlide());
             
             // Setup indicator clicks
             this.indicators.forEach((indicator, index) => {
@@ -351,14 +354,18 @@ document.addEventListener('DOMContentLoaded', function() {
             this.startAutoplay();
             
             // Pause autoplay on hover
-            this.container.addEventListener('mouseenter', () => this.stopAutoplay());
-            this.container.addEventListener('mouseleave', () => this.startAutoplay());
+            if (this.container) {
+                this.container.addEventListener('mouseenter', () => this.stopAutoplay());
+                this.container.addEventListener('mouseleave', () => this.startAutoplay());
+            }
         },
         
         goToSlide: function(index) {
             // Remove active class from current slide and indicator
             this.slides[this.currentIndex].classList.remove('active');
-            this.indicators[this.currentIndex].classList.remove('active');
+            if (this.indicators[this.currentIndex]) {
+                this.indicators[this.currentIndex].classList.remove('active');
+            }
             
             // Update current index
             this.currentIndex = index;
@@ -370,7 +377,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Add active class to new slide and indicator
             this.slides[this.currentIndex].classList.add('active');
-            this.indicators[this.currentIndex].classList.add('active');
+            if (this.indicators[this.currentIndex]) {
+                this.indicators[this.currentIndex].classList.add('active');
+            }
         },
         
         nextSlide: function() {
@@ -394,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Check if carousel exists before initializing
-    if (carousel.container) {
+    if (document.querySelector('.hero-carousel')) {
         carousel.init();
     }
 });
