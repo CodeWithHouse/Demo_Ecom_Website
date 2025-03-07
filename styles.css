@@ -1445,83 +1445,8 @@
   padding: 0 var(--spacing-lg);
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: var(--spacing-md);
-  color: white;
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  margin-bottom: var(--spacing-lg);
-}
-
-/* Carousel Navigation */
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  z-index: 3;
-}
-
-.carousel-nav button {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.carousel-nav button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Carousel Indicators */
-.carousel-indicators {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  z-index: 3;
-}
-
-.carousel-indicators .indicator {
-  width: 12px;
-  height: 12px;
-  border: 2px solid white;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.carousel-indicators .indicator.active {
-  background-color: white;
-}
-
 @media (max-width: 768px) {
   .hero-carousel {
-      height: 400px;
+    height: 400px;
   }
-  
-  .hero-content h1 {
-      font-size: 2.25rem;
-  }
-  
-  .hero-content p {
-    font-size: 1.1rem;
 }
-}
-  
