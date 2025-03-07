@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsomeShop - Your Pet's Favorite Store</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://via.placeholder.com/150x50" alt="PawsomeShop Logo">
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#">Products <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#">Dogs</a>
+                            <a href="#">Cats</a>
+                            <a href="#">Fish</a>
+                            <a href="#">Birds</a>
+                            <a href="#">Small Pets</a>
+                        </div>
+                    </li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart">
+                    <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                </div>
+                <div class="account">
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Treat Your Pet to the Best</h1>
+                <p>Quality products for all your furry, feathery, and scaly friends.</p>
+                <a href="#featured" class="btn primary-btn">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section id="featured" class="featured-products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Products</h2>
+                    <p>Our most popular picks for your pets</p>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-badge">Sale</div>
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Premium Dog Food">
+                        </div>
+                        <div class="product-info">
+                            <h3>Premium Dog Food</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(42)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="original-price">$49.99</span>
+                                <span class="current-price">$39.99</span>
+                            </div>
+                            <a href="product.html?id=1" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Cat Climbing Tree">
+                        </div>
+                        <div class="product-info">
+                            <h3>Cat Climbing Tree</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(87)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$129.99</span>
+                            </div>
+                            <a href="product.html?id=2" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge new">New</div>
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Interactive Bird Toy">
+                        </div>
+                        <div class="product-info">
+                            <h3>Interactive Bird Toy</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(23)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$24.99</span>
+                            </div>
+                            <a href="product.html?id=3" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Aquarium Starter Kit">
+                        </div>
+                        <div class="product-info">
+                            <h3>Aquarium Starter Kit</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <span>(16)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$89.99</span>
+                            </div>
+                            <a href="product.html?id=4" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pet Categories -->
+        <section class="pet-categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Shop by Pet</h2>
+                    <p>Find the perfect products for your pet</p>
+                </div>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Dogs">
+                        <div class="category-info">
+                            <h3>Dogs</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Cats">
+                        <div class="category-info">
+                            <h3>Cats</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Fish">
+                        <div class="category-info">
+                            <h3>Fish</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Birds">
+                        <div class="category-info">
+                            <h3>Birds</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Small Pets">
+                        <div class="category-info">
+                            <h3>Small Pets</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/300x200" alt="Reptiles">
+                        <div class="category-info">
+                            <h3>Reptiles</h3>
+                            <a href="#" class="btn outline-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h2>Join Our Pack!</h2>
+                <p>Subscribe to our newsletter for exclusive offers, pet care tips, and more.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn primary-btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>PawsomeShop</h3>
+                <p>Your one-stop shop for all your pet needs. Quality products, happy pets.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Dogs</a></li>
+                    <li><a href="#">Cats</a></li>
+                    <li><a href="#">Fish</a></li>
+                    <li><a href="#">Birds</a></li>
+                    <li><a href="#">Small Pets</a></li>
+                    <li><a href="#">Reptiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <address>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animalia, CA 94103</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@pawsomeshop.com</p>
+                </address>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PawsomeShop. All rights reserved.</p>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    // This is a placeholder for mobile menu functionality
+                    alert('Mobile menu functionality would be implemented here.');
+                    // In a real implementation, this would toggle a class on the nav element
+                    // and display a mobile-friendly menu
+                });
+            }
+            
+            // Newsletter Form
+            const newsletterForm = document.querySelector('.newsletter-form');
+            
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const emailInput = this.querySelector('input[type="email"]');
+                    const email = emailInput.value;
+                    
+                    if (email) {
+                        // In a real application, this would send the email to a server
+                        alert(`Thank you for subscribing with ${email}!`);
+                        emailInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

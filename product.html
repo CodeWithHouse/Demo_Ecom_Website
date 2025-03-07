@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Dog Food - PawsomeShop</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://via.placeholder.com/150x50" alt="PawsomeShop Logo">
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Products <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#">Dogs</a>
+                            <a href="#">Cats</a>
+                            <a href="#">Fish</a>
+                            <a href="#">Birds</a>
+                            <a href="#">Small Pets</a>
+                        </div>
+                    </li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart">
+                    <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                </div>
+                <div class="account">
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Dogs</a></li>
+                    <li class="current" id="product-name-breadcrumb">Premium Dog Food</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Product Details -->
+        <section class="product-details">
+            <div class="container">
+                <div class="product-image-gallery">
+                    <div class="main-image">
+                        <img id="main-product-image" src="https://via.placeholder.com/500x500" alt="Premium Dog Food">
+                    </div>
+                    <div class="image-thumbnails">
+                        <div class="thumbnail active">
+                            <img src="https://via.placeholder.com/100x100" alt="Product Thumbnail 1" onclick="setMainImage(this.src)">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://via.placeholder.com/100x100" alt="Product Thumbnail 2" onclick="setMainImage(this.src)">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://via.placeholder.com/100x100" alt="Product Thumbnail 3" onclick="setMainImage(this.src)">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="https://via.placeholder.com/100x100" alt="Product Thumbnail 4" onclick="setMainImage(this.src)">
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info-details">
+                    <h1 id="product-name">Premium Dog Food</h1>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(42 reviews)</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="original-price" id="original-price">$49.99</span>
+                        <span class="current-price" id="current-price">$39.99</span>
+                        <span class="discount-badge">20% Off</span>
+                    </div>
+                    <div class="product-availability">
+                        <i class="fas fa-check-circle"></i> In Stock
+                    </div>
+                    <div class="product-description">
+                        <p>Premium quality dog food made with real chicken as the first ingredient. This nutrient-rich formula supports your dog's overall health, digestion, and immune system. Suitable for all breeds and life stages.</p>
+                        <ul>
+                            <li>No artificial colors, flavors, or preservatives</li>
+                            <li>Rich in protein for muscle development</li>
+                            <li>Contains Omega-3 fatty acids for healthy skin and coat</li>
+                            <li>Prebiotics for digestive health</li>
+                            <li>Antioxidants to support immune system</li>
+                        </ul>
+                    </div>
+                    <div class="product-variants">
+                        <div class="variant-group">
+                            <h3>Size:</h3>
+                            <div class="variant-options">
+                                <button class="variant-btn" data-price="29.99">5 lbs</button>
+                                <button class="variant-btn active" data-price="39.99" data-original-price="49.99">15 lbs</button>
+                                <button class="variant-btn" data-price="59.99" data-original-price="69.99">30 lbs</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10" id="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn primary-btn add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn outline-btn wishlist-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">SKU:</span>
+                            <span class="meta-value">DOG-FOOD-1001</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Category:</span>
+                            <span class="meta-value">Dog Food, Pet Nutrition</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Tags:</span>
+                            <span class="meta-value">Dog, Food, Premium, Nutrition</span>
+                        </div>
+                    </div>
+                    <div class="product-share">
+                        <span>Share:</span>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Tabs -->
+        <section class="product-tabs">
+            <div class="container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="description">Description</button>
+                    <button class="tab-btn" data-tab="specs">Specifications</button>
+                    <button class="tab-btn" data-tab="reviews">Reviews (42)</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="description">
+                        <h2>Product Description</h2>
+                        <p>Our Premium Dog Food is formulated to meet the nutritional needs of dogs at all life stages. Made with real chicken as the first ingredient, this high-quality dog food provides essential nutrients and great taste your dog will love.</p>
+                        <p>The balanced formula includes:</p>
+                        <ul>
+                            <li><strong>High-quality protein</strong> for lean muscle maintenance</li>
+                            <li><strong>Optimal blend of fibers</strong> for digestive health</li>
+                            <li><strong>Omega-3 & 6 fatty acids</strong> for skin and coat health</li>
+                            <li><strong>Essential vitamins and minerals</strong> for immune support</li>
+                            <li><strong>DHA</strong> for brain and vision development</li>
+                        </ul>
+                        <p>We use only premium ingredients with no artificial colors, flavors, or preservatives. Our formula is designed by veterinary nutritionists to provide complete and balanced nutrition for your dog.</p>
+                    </div>
+                    <div class="tab-pane" id="specs">
+                        <h2>Product Specifications</h2>
+                        <table class="specs-table">
+                            <tr>
+                                <th>Nutrient</th>
+                                <th>Guaranteed Analysis</th>
+                            </tr>
+                            <tr>
+                                <td>Crude Protein</td>
+                                <td>26.0% min</td>
+                            </tr>
+                            <tr>
+                                <td>Crude Fat</td>
+                                <td>15.0% min</td>
+                            </tr>
+                            <tr>
+                                <td>Crude Fiber</td>
+                                <td>4.0% max</td>
+                            </tr>
+                            <tr>
+                                <td>Moisture</td>
+                                <td>10.0% max</td>
+                            </tr>
+                            <tr>
+                                <td>Calcium</td>
+                                <td>1.2% min</td>
+                            </tr>
+                            <tr>
+                                <td>Phosphorus</td>
+                                <td>1.0% min</td>
+                            </tr>
+                            <tr>
+                                <td>Omega-6 Fatty Acids</td>
+                                <td>2.5% min</td>
+                            </tr>
+                            <tr>
+                                <td>Omega-3 Fatty Acids</td>
+                                <td>0.5% min</td>
+                            </tr>
+                        </table>
+                        <h3>Ingredients</h3>
+                        <p>Chicken, Chicken Meal, Brown Rice, Barley, Oatmeal, Chicken Fat (preserved with mixed tocopherols), Natural Flavor, Flaxseed, Dried Tomato Pomace, Dried Egg Product, Dried Chicory Root, Vitamin E Supplement, Niacin Supplement, d-Calcium Pantothenate, Vitamin A Supplement, Thiamine Mononitrate, Pyridoxine Hydrochloride, Riboflavin Supplement, Vitamin D3 Supplement, Biotin, Vitamin B12 Supplement, Folic Acid, Ascorbic Acid (Vitamin C), Choline Chloride, Potassium Chloride, Salt, Zinc Proteinate, Zinc Sulfate, Ferrous Sulfate, Iron Proteinate, Copper Sulfate, Copper Proteinate, Manganese Proteinate, Manganese Sulfate, Calcium Iodate, Sodium Selenite, Dried Lactobacillus acidophilus Fermentation Product, Dried Enterococcus faecium Fermentation Product.</p>
+                    </div>
+                    <div class="tab-pane" id="reviews">
+                        <h2>Customer Reviews</h2>
+                        <div class="reviews-summary">
+                            <div class="average-rating">
+                                <span class="rating-value">4.5</span>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-count">Based on 42 reviews</span>
+                            </div>
+                            <div class="rating-bars">
+                                <div class="rating-bar">
+                                    <span class="rating-level">5 Stars</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 70%"></div>
+                                    </div>
+                                    <span class="rating-percent">70%</span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="rating-level">4 Stars</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 20%"></div>
+                                    </div>
+                                    <span class="rating-percent">20%</span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="rating-level">3 Stars</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 5%"></div>
+                                    </div>
+                                    <span class="rating-percent">5%</span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="rating-level">2 Stars</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 3%"></div>
+                                    </div>
+                                    <span class="rating-percent">3%</span>
+                                </div>
+                                <div class="rating-bar">
+                                    <span class="rating-level">1 Star</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 2%"></div>
+                                    </div>
+                                    <span class="rating-percent">2%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="customer-reviews">
+                            <div class="review">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <img src="https://via.placeholder.com/40x40" alt="Reviewer">
+                                        <div>
+                                            <h4>John D.</h4>
+                                            <span class="review-date">October 12, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <h3>My dog loves this food!</h3>
+                                    <p>I've been feeding my Golden Retriever this food for the past 6 months, and he absolutely loves it. His coat is shinier, and he seems to have more energy. Definitely worth the price!</p>
+                                </div>
+                                <div class="review-photos">
+                                    <img src="https://via.placeholder.com/80x80" alt="User photo">
+                                    <img src="https://via.placeholder.com/80x80" alt="User photo">
+                                </div>
+                            </div>
+                            
+                            <div class="review">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <img src="https://via.placeholder.com/40x40" alt="Reviewer">
+                                        <div>
+                                            <h4>Sarah M.</h4>
+                                            <span class="review-date">September 28, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <h3>Good quality, but a bit pricey</h3>
+                                    <p>This is definitely high-quality dog food. My pup loves it and I've noticed improvements in her health. The only downside is the price, which is why I'm giving it 4 stars instead of 5. Still, I'll continue to purchase.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="write-review">
+                            <h3>Write a Review</h3>
+                            <form class="review-form">
+                                <div class="form-group">
+                                    <label>Your Rating:</label>
+                                    <div class="rating-select">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-title">Review Title:</label>
+                                    <input type="text" id="review-title" placeholder="Give your review a title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-content">Your Review:</label>
+                                    <textarea id="review-content" rows="5" placeholder="Write your review here..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Add Photos (optional):</label>
+                                    <input type="file" multiple accept="image/*">
+                                </div>
+                                <button type="submit" class="btn primary-btn">Submit Review</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="related-products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>You May Also Like</h2>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Dog Treats">
+                        </div>
+                        <div class="product-info">
+                            <h3>Organic Dog Treats</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(34)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$12.99</span>
+                            </div>
+                            <a href="#" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">Sale</div>
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Dog Toy">
+                        </div>
+                        <div class="product-info">
+                            <h3>Interactive Dog Toy</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(56)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="original-price">$19.99</span>
+                                <span class="current-price">$14.99</span>
+                            </div>
+                            <a href="#" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Dog Collar">
+                        </div>
+                        <div class="product-info">
+                            <h3>Adjustable Dog Collar</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(28)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$24.99</span>
+                            </div>
+                            <a href="#" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge new">New</div>
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/280" alt="Dog Bed">
+                        </div>
+                        <div class="product-info">
+                            <h3>Orthopedic Dog Bed</h3>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(17)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">$79.99</span>
+                            </div>
+                            <a href="#" class="btn secondary-btn">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>PawsomeShop</h3>
+                <p>Your one-stop shop for all your pet needs. Quality products, happy pets.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Dogs</a></li>
+                    <li><a href="#">Cats</a></li>
+                    <li><a href="#">Fish</a></li>
+                    <li><a href="#">Birds</a></li>
+                    <li><a href="#">Small Pets</a></li>
+                    <li><a href="#">Reptiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <address>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animalia, CA 94103</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@pawsomeshop.com</p>
+                </address>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PawsomeShop. All rights reserved.</p>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    alert('Mobile menu would open here');
+                });
+            }
+            
+            // Initialize quantity selectors
+            const minusButtons = document.querySelectorAll('.quantity-btn.minus');
+            const plusButtons = document.querySelectorAll('.quantity-btn.plus');
+            
+            minusButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.nextElementSibling;
+                    let value = parseInt(input.value);
+                    if (value > parseInt(input.min)) {
+                        input.value = value - 1;
+                    }
+                });
+            });
+            
+            plusButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    let value = parseInt(input.value);
+                    if (value < parseInt(input.max)) {
+                        input.value = value + 1;
+                    }
+                });
+            });
+            
+            // Initialize product variant buttons
+            const variantButtons = document.querySelectorAll('.variant-btn');
+            
+            variantButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons in the same group
+                    const variantGroup = this.closest('.variant-group');
+                    variantGroup.querySelectorAll('.variant-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to the clicked button
+                    this.classList.add('active');
+                    
+                    // Update price if data attributes are present
+                    const price = this.getAttribute('data-price');
+                    const originalPrice = this.getAttribute('data-original-price');
+                    
+                    if (price) {
+                        const currentPriceElement = document.getElementById('current-price');
+                        if (currentPriceElement) {
+                            currentPriceElement.textContent = `$${price}`;
+                        }
+                    }
+                    
+                    if (originalPrice) {
+                        const originalPriceElement = document.getElementById('original-price');
+                        if (originalPriceElement) {
+                            originalPriceElement.textContent = `$${originalPrice}`;
+                            originalPriceElement.style.display = 'inline';
+                        }
+                    } else {
+                        const originalPriceElement = document.getElementById('original-price');
+                        if (originalPriceElement) {
+                            originalPriceElement.style.display = 'none';
+                        }
+                    }
+                });
+            });
+            
+            // Initialize product tabs
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all tab buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab button
+                    this.classList.add('active');
+                    
+                    // Hide all tab panes
+                    const tabPanes = document.querySelectorAll('.tab-pane');
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab pane
+                    const tabId = this.getAttribute('data-tab');
+                    const activePane = document.getElementById(tabId);
+                    if (activePane) {
+                        activePane.classList.add('active');
+                    }
+                });
+            });
+            
+            // Initialize rating selection
+            const ratingStars = document.querySelectorAll('.rating-select i');
+            
+            ratingStars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    // Reset all stars
+                    ratingStars.forEach(s => {
+                        s.classList.remove('fas', 'active');
+                        s.classList.add('far');
+                    });
+                    
+                    // Set clicked star and all stars before it to active
+                    for (let i = 0; i <= index; i++) {
+                        ratingStars[i].classList.remove('far');
+                        ratingStars[i].classList.add('fas', 'active');
+                    }
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    // Fill in stars up to the current one on hover
+                    for (let i = 0; i <= index; i++) {
+                        if (!ratingStars[i].classList.contains('active')) {
+                            ratingStars[i].classList.remove('far');
+                            ratingStars[i].classList.add('fas');
+                        }
+                    }
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    // On mouseout, reset to the active state
+                    ratingStars.forEach(s => {
+                        if (!s.classList.contains('active')) {
+                            s.classList.remove('fas');
+                            s.classList.add('far');
+                        }
+                    });
+                });
+            });
+            
+            // Add to Cart Functionality
+            const addToCartButton = document.querySelector('.add-to-cart-btn');
+            
+            if (addToCartButton) {
+                addToCartButton.addEventListener('click', function() {
+                    // Get product information
+                    const productName = document.getElementById('product-name').textContent;
+                    const quantity = parseInt(document.getElementById('quantity-input').value);
+                    
+                    // Get selected variant (size)
+                    let variant = '';
+                    const activeVariant = document.querySelector('.variant-btn.active');
+                    if (activeVariant) {
+                        variant = activeVariant.textContent;
+                    }
+                    
+                    // Show confirmation
+                    alert(`Added to cart: ${quantity} × ${productName} (${variant})`);
+                    
+                    // Update cart count in header
+                    const cartCount = document.querySelector('.cart-count');
+                    if (cartCount) {
+                        const currentCount = parseInt(cartCount.textContent);
+                        cartCount.textContent = currentCount + quantity;
+                    }
+                });
+            }
+        });
+
+        // Function to change main product image
+        function setMainImage(src) {
+            const mainImage = document.getElementById('main-product-image');
+            if (mainImage) {
+                mainImage.src = src;
+            }
+            
+            // Update active thumbnail
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumbnail => {
+                if (thumbnail.querySelector('img').src === src) {
+                    thumbnail.classList.add('active');
+                } else {
+                    thumbnail.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
