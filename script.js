@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nextBtn: document.querySelector('.next-btn'),
         currentIndex: 0,
         interval: null,
-        autoPlayDuration: 5000, // 5 seconds per slide
+        autoPlayDuration: 3000, // 5 seconds per slide
         
         init: function() {
             // Initialize event listeners
