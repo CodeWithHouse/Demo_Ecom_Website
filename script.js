@@ -2,98 +2,94 @@
 const productDatabase = {
     '1': {
         name: 'Adult Perfect Weight Small And Mini Dry Dog Food',
-        category: 'Dog Food',
-        categoryPath: 'Dogs',
-        originalPrice: '49.99',
-        currentPrice: '39.99',
-        discount: '20% Off',
-        description: 'Premium quality dog food made with real chicken as the first ingredient. This nutrient-rich formula supports your dog\'s overall health, digestion, and immune system. Suitable for all breeds and life stages.',
+        petCategory: 'Dog',
+        productCategory: 'Dog Food',
+        categoryPath: 'Dry Food',
+        currentPrice: '34.99',
+        description: 'This premium dry food is crafted to assist small breed dogs in reaching and sustaining optimal weight, promoting a healthier lifestyle.',
         features: [
-            'No artificial colors, flavors, or preservatives',
-            'Rich in protein for muscle development',
-            'Contains Omega-3 fatty acids for healthy skin and coat',
-            'Prebiotics for digestive health',
-            'Antioxidants to support immune system'
-        ],
-        sku: 'DOG-FOOD-1001',
+            'Proprietary blend supports weight loss while maintaining lean muscle',
+            'Real chicken as the main ingredient to nourish your pet',
+            'Includes an antioxidant blend for immune system support',
+            'High-quality ingredients ensure easy digestion',
+            'No artificial colors, flavors, or preservatives for a natural diet'],
+        sku: 'HS-DRY-DOG-FOOD-1001',
         tags: 'Dog, Food, Premium, Nutrition',
         rating: 4.5,
         reviews: 42,
-        mainImage: 'assets/products/dog-food-main.jpg',
+        mainImage: 'assets/products/hs-weight-small/main_hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food_.png',
         thumbnails: [
-            'assets/products/dog-food-thumb1.jpg',
-            'assets/products/dog-food-thumb2.jpg',
-            'assets/products/dog-food-thumb3.jpg',
-            'assets/products/dog-food-thumb4.jpg'
+            'assets/products/hs-weight-small/main_hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food_.png',
+            'assets/products/hs-weight-small/hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food.png',
+            'assets/products/hs-weight-small/hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food___1.png',
+            'assets/products/hs-weight-small/hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food___3.png'
         ],
         variants: [
-            { name: '5 lbs', price: '29.99', originalPrice: null },
-            { name: '15 lbs', price: '39.99', originalPrice: '49.99' },
-            { name: '30 lbs', price: '59.99', originalPrice: '69.99' }
+            { name: '1.8kg', price: '34.99', originalPrice: null },
+            { name: '15 lbs', price: '103.39', originalPrice: null },
         ]
     },
     '2': {
-        name: 'Cat Climbing Tree',
-        category: 'Cat Furniture',
-        categoryPath: 'Cats',
+        name: 'Senior 7 Plus Small And Mini Dry Dog Food',
+        petCategory: 'Dog',
+        productCategory: 'Dog Food',
+        categoryPath: 'Dry Food',
         originalPrice: null,
-        currentPrice: '129.99',
+        currentPrice: '32.99',
         discount: null,
-        description: 'Multi-level cat tree with scratching posts and cozy platforms. Perfect for climbing, scratching, playing, and napping. Helps keep your cat active and entertained.',
+        description: 'This premium dry food is crafted to assist small breed dogs in reaching and sustaining optimal weight, promoting a healthier lifestyle.',
         features: [
-            'Sturdy base for stability',
-            'Plush cushions for comfortable rest',
-            'Multiple sisal-wrapped posts for scratching',
-            'Hanging toys for playful engagement',
-            'Easy to assemble with included tools'
+            'Specially designed for small and toy breed senior dogs',
+            'Enriched with a specific blend of antioxidants, vitamins C & E for immune system health',
+            'Omega 6 fatty acids and vitamin E support healthy skin and coat',
+            'Promotes vitality and wellbeing with nutrient-rich ingredients',
+            'Made with high-quality, natural ingredients without artificial colors, flavors, or preservatives'
         ],
-        sku: 'CAT-TREE-2002',
-        tags: 'Cat, Furniture, Climbing, Tree',
+        sku: 'HS-DRY-DOG-FOOD-2002',
+        tags: 'Dog, Food, Premium, Nutrition',
         rating: 5.0,
         reviews: 87,
         mainImage: 'assets/products/cat-tree-main.jpg',
         thumbnails: [
-            'assets/products/cat-tree-thumb1.jpg',
-            'assets/products/cat-tree-thumb2.jpg',
-            'assets/products/cat-tree-thumb3.jpg',
-            'assets/products/cat-tree-thumb4.jpg'
+            'assets/products/hs-dry-dog-food/main-diet-senior.png',
+            'assets/products/hs-dry-dog-food/hills-science-diet-senior-7-plus-small-and-mini-dry-dog-food___1.png',
+            'assets/products/hs-dry-dog-food/hills-science-diet-senior-7-plus-small-and-mini-dry-dog-food___2.png',
+            'assets/products/hs-dry-dog-food/hills-science-diet-senior-7-plus-small-and-mini-dry-dog-food___5.png'
         ],
         variants: [
-            { name: 'Small (48")', price: '89.99', originalPrice: null },
-            { name: 'Medium (60")', price: '129.99', originalPrice: null },
-            { name: 'Large (72")', price: '169.99', originalPrice: null }
+            { name: '1.8kg', price: '34.99', originalPrice: null },
+            { name: '5.67kg', price: '103.99', originalPrice: null },
         ]
     },
     '3': {
-        name: 'Interactive Bird Toy',
-        category: 'Bird Accessories',
-        categoryPath: 'Birds',
+        name: 'As Good As It Looks Sensations Jelly Adult Wet Cat Food Pouches',
+        petCategory: 'Cat',
+        productCategory: 'Cat Food',
+        categoryPath: 'Wet Food',
         originalPrice: null,
-        currentPrice: '24.99',
+        currentPrice: '58.49',
         discount: null,
-        description: 'Stimulating toy to keep your feathered friend entertained and engaged. Colorful, durable materials with various textures to explore.',
+        description: 'FELIX Adult As Good as it Looks? & Sensations Jellies Favourites Selection (36 x 85g) offers your cat a delicious range of tender meaty or fishy pieces in a flavourful jelly, designed to satisfy even the most discerning tastes. With three irresistible flavours ? Salmon, Chicken, and Oceanfish ? this selection is both nutritious and highly enjoyable for your furry friend.',
         features: [
-            'Colorful beads and bells for auditory stimulation',
-            'Various textures to explore',
-            'Encourages physical activity',
-            'Helps prevent boredom and feather plucking',
-            'Safe, non-toxic materials'
+            'Three delicious flavours to satisfy your cat?s love of variety',
+            'Irresistible meaty pieces in succulent jelly',
+            'Made with Vitamins D & E',
+            'Contains balanced minerals for overall health - A source of Omega 6 fatty acids',
         ],
-        sku: 'BIRD-TOY-3003',
-        tags: 'Bird, Toy, Interactive, Entertainment',
+        sku: 'CAT-WET-FOOD-3003',
+        tags: 'Cat, Nutrition, Food, Premium',
         rating: 4.0,
         reviews: 23,
-        mainImage: 'assets/products/bird-toy-main.jpg',
+        mainImage: 'assets/products/wet-cat-food-pouches/wet-cat-food-pouches.png',
         thumbnails: [
-            'assets/products/bird-toy-thumb1.jpg',
-            'assets/products/bird-toy-thumb2.jpg',
-            'assets/products/bird-toy-thumb3.jpg',
-            'assets/products/bird-toy-thumb4.jpg'
+            'assets/products/wet-cat-food-pouches/wet-cat-food-pouches.png',
+            'assets/products/wet-cat-food-pouches/felix-as-good-as-it-looks-sensations-jelly-adult-wet-cat-food-pouches___1.png',
+            'assets/products/wet-cat-food-pouches/felix-as-good-as-it-looks-sensations-jelly-adult-wet-cat-food-pouches___2.png',
+            'assets/products/wet-cat-food-pouches/felix-as-good-as-it-looks-sensations-jelly-adult-wet-cat-food-pouches___3.png'
         ],
         variants: [
-            { name: 'Small', price: '16.99', originalPrice: null },
-            { name: 'Medium', price: '24.99', originalPrice: null },
-            { name: 'Large', price: '32.99', originalPrice: null }
+            { name: '36 x 85g', price: '29.99', originalPrice: null },
+            { name: '2 x (36 x85g)', price: '58.49', originalPrice: null },
         ]
     }
 };
