@@ -5,7 +5,9 @@ const productDatabase = {
         petCategory: 'Dog',
         productCategory: 'Dog Food',
         categoryPath: 'Dry Food',
+        originalPrice: null,
         currentPrice: '34.99',
+        discount: null,
         description: 'This premium dry food is crafted to assist small breed dogs in reaching and sustaining optimal weight, promoting a healthier lifestyle.',
         features: [
             'Proprietary blend supports weight loss while maintaining lean muscle',
@@ -14,6 +16,7 @@ const productDatabase = {
             'High-quality ingredients ensure easy digestion',
             'No artificial colors, flavors, or preservatives for a natural diet'],
         sku: 'HS-DRY-DOG-FOOD-1001',
+        category: 'Dog Food',
         tags: 'Dog, Food, Premium, Nutrition',
         rating: 4.5,
         reviews: 42,
@@ -46,10 +49,11 @@ const productDatabase = {
             'Made with high-quality, natural ingredients without artificial colors, flavors, or preservatives'
         ],
         sku: 'HS-DRY-DOG-FOOD-2002',
+        category: 'Dog Food',
         tags: 'Dog, Food, Premium, Nutrition',
         rating: 5.0,
         reviews: 87,
-        mainImage: 'assets/products/cat-tree-main.jpg',
+        mainImage: 'assets/products/hs-dry-dog-food/main-diet-senior.png',
         thumbnails: [
             'assets/products/hs-dry-dog-food/main-diet-senior.png',
             'assets/products/hs-dry-dog-food/hills-science-diet-senior-7-plus-small-and-mini-dry-dog-food___1.png',
@@ -77,6 +81,7 @@ const productDatabase = {
             'Contains balanced minerals for overall health - A source of Omega 6 fatty acids',
         ],
         sku: 'CAT-WET-FOOD-3003',
+        category: 'Cat Food',
         tags: 'Cat, Nutrition, Food, Premium',
         rating: 4.0,
         reviews: 23,
@@ -91,11 +96,57 @@ const productDatabase = {
             { name: '36 x 85g', price: '29.99', originalPrice: null },
             { name: '2 x (36 x85g)', price: '58.49', originalPrice: null },
         ]
+    },
+    '4': {
+        name: 'Everyday Cosy Pet Bed Round Cuddler',
+        petCategory: 'Dog',
+        productCategory: 'Beds & Furniture',
+        categoryPath: 'Beds',
+        originalPrice: null,
+        currentPrice: '29.99',
+        discount: null,
+        description: 'Give your pet the comfort they deserve with this plush round cuddler bed. Perfect for small to medium sized pets who love to curl up for a cozy nap.',
+        features: [
+            'Ultra-soft plush sleeping surface for maximum comfort',
+            'Raised edges create a sense of security and provide head support',
+            'Non-slip bottom to prevent sliding on hardwood or tile floors',
+            'Machine washable for easy care',
+            'Available in multiple sizes to suit all pets'
+        ],
+        sku: 'BED-ROUND-4004',
+        category: 'Pet Beds',
+        tags: 'Dog, Cat, Bed, Comfort, Sleep',
+        rating: 3.5,
+        reviews: 16,
+        mainImage: '/assets/products/bed-round-cuddler/main-cuddler.png',
+        thumbnails: [
+            '/assets/products/bed-round-cuddler/main-cuddler.png',
+            '/assets/products/bed-round-cuddler/cuddler-2.png',
+            '/assets/products/bed-round-cuddler/cuddler-3.png',
+            '/assets/products/bed-round-cuddler/cuddler-4.png'
+        ],
+        variants: [
+            { name: 'Small', price: '29.99', originalPrice: null },
+            { name: 'Medium', price: '39.99', originalPrice: null },
+            { name: 'Large', price: '49.99', originalPrice: null }
+        ]
     }
 };
 
+// Function to check if we're on a product page
+function isProductPage() {
+    return window.location.pathname.includes('product.html') || 
+           window.location.pathname.endsWith('product');
+}
+
+// Console log for debugging
+console.log("Script loaded. Is product page:", isProductPage());
+console.log("Current URL:", window.location.href);
+
 // Hero Carousel Functionality - Simplified for Autoplay Only
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded");
+    
     // Initialize the carousel
     const carousel = {
         slides: document.querySelectorAll('.carousel-slide'),
@@ -173,8 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Load product data if on product page
-    if (window.location.pathname.includes('product.html')) {
+    // Load product data if on product page - Modified check to be more robust
+    if (isProductPage()) {
+        console.log("Loading product data...");
         loadProductData();
         
         // Initialize quantity selectors
@@ -188,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add to cart functionality
         initAddToCart();
+    } else {
+        console.log("Not on product page, skipping product load");
     }
 });
 
@@ -196,9 +250,12 @@ function loadProductData() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id') || '1'; // Default to product 1 if no ID is provided
     
+    console.log("Loading product ID:", productId);
     const product = productDatabase[productId];
     
     if (product) {
+        console.log("Product found:", product.name);
+        
         // Update product name
         const nameElement = document.getElementById('product-name');
         const nameBreadcrumb = document.getElementById('product-name-breadcrumb');
@@ -207,8 +264,8 @@ function loadProductData() {
         
         // Update category in breadcrumb
         const categoryBreadcrumb = document.getElementById('product-category-breadcrumb');
-        if (categoryBreadcrumb && product.categoryPath) {
-            categoryBreadcrumb.textContent = product.categoryPath;
+        if (categoryBreadcrumb && product.petCategory) {
+            categoryBreadcrumb.textContent = product.petCategory;
         }
         
         // Update product prices
@@ -307,7 +364,7 @@ function loadProductData() {
         document.title = `${product.name} - PetCircle`;
     } else {
         // Handle product not found
-        console.error('Product not found');
+        console.error('Product not found with ID:', productId);
     }
 }
 
