@@ -58,8 +58,8 @@ const formThemes = {
         color: "#ff9800"
     },
     "Dog": {
-        title: "Personalize Your Dog's Experience",
-        buttonText: "Personalize",
+        title: "Enjoy 10% Off For Your Dog Fur Baby",
+        buttonText: "Get Discounts",
         icon: "fas fa-dog",
         color: "#2196f3"
     },
@@ -167,66 +167,7 @@ async function renderPopUP() {
                 </div>
                 
                 <!-- Form -->
-                <form id="pet-details-form">
-                    <div style="margin-bottom: 15px;">
-                        <label style="
-                            display: block;
-                            margin-bottom: 5px;
-                            font-weight: 500;
-                            color: #555;
-                            font-size: 14px;
-                        ">Pet Type</label>
-                        <div style="display: flex; gap: 10px;">
-                            <label style="
-                                display: flex;
-                                align-items: center;
-                                cursor: pointer;
-                            ">
-                                <input type="radio" name="petType" value="dog" checked style="margin-right: 5px;">
-                                <span>Dog</span>
-                            </label>
-                            <label style="
-                                display: flex;
-                                align-items: center;
-                                cursor: pointer;
-                            ">
-                                <input type="radio" name="petType" value="cat" style="margin-right: 5px;">
-                                <span>Cat</span>
-                            </label>
-                            <label style="
-                                display: flex;
-                                align-items: center;
-                                cursor: pointer;
-                            ">
-                                <input type="radio" name="petType" value="other" style="margin-right: 5px;">
-                                <span>Other</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label style="
-                            display: block;
-                            margin-bottom: 5px;
-                            font-weight: 500;
-                            color: #555;
-                            font-size: 14px;
-                        ">Pet Name</label>
-                        <input 
-                            type="text" 
-                            name="petName" 
-                            required 
-                            style="
-                                width: 100%;
-                                padding: 10px;
-                                border-radius: 4px;
-                                border: 1px solid #ddd;
-                                box-sizing: border-box;
-                                font-size: 14px;
-                            "
-                        >
-                    </div>
-                    
+                <form id="pet-details-form">                    
                     <div style="margin-bottom: 15px;">
                         <label style="
                             display: block;
