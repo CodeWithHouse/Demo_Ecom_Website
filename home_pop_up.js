@@ -1,6 +1,9 @@
 async function waitForAnalytic (){
     return new Promise ((resolve, reject) => {
         const interval = setInterval(() => {
+            if (!analytics) {
+                return;
+            }
             if (analytics.user().id() || analytics.user().anonymousId()) {
                 clearInterval(interval);
                 resolve();
