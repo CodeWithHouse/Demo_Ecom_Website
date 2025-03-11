@@ -1,7 +1,7 @@
 async function waitForAnalytic (){
     return new Promise ((resolve, reject) => {
         const interval = setInterval(() => {
-            if (!analytics) {
+            if (!analytics || !analytics.user) {
                 return;
             }
             if (analytics.user().id() || analytics.user().anonymousId()) {
