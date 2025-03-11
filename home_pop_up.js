@@ -504,7 +504,7 @@ async function renderPopUP() {
             // Update analytics if available
             if (typeof analytics !== 'undefined') {
                 try {
-                    analytics.identify(userData.email, {
+                    analytics.identify( {
                         firstName: userData.firstName,
                         lastName: userData.lastName,
                         email: userData.email,
