@@ -102,7 +102,10 @@ async function renderPopUP() {
         if (profile && profile.traits && profile.traits.most_frequent_tags) {
             most_frequent_tags = profile.traits.most_frequent_tags;
         }
-
+        if (most_frequent_tags === "default") {
+            console.warn("No tags found, using default theme");
+            return;
+        }
         // Get most frequent pet category (default to Dog if not set)
         let most_frequent_pet_category = "Dog";
         if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
