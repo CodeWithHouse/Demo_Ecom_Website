@@ -22,6 +22,9 @@ addToCartButton.addEventListener("click", () => {
   });
   const cartCount = document.querySelector(".cart-count");
   analytics.identify({ cart_count: parseInt(cartCount.textContent) + 1 });
+  getUserProfile().then((profile) => {
+    console.log(profile);
+  });
 });
 
 analytics.track("Product Viewed", {
