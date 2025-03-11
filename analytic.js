@@ -14,7 +14,7 @@ addToCartButton.addEventListener("click", () => {
     description: product.description,
     sku: product.sku,
     category: product.category,
-    tags: product.tags,
+    tags: tagsStringToArray(product.tags),
     rating: product.rating,
     mainImage: product.mainImage,
     features: product.features,
@@ -24,39 +24,22 @@ addToCartButton.addEventListener("click", () => {
 });
 
 analytics.track("Product Viewed", {
-    name: product.name,
-    petCategory: product.petCategory,
-    productCategory: product.productCategory,
-    categoryPath: product.categoryPath,
-    originalPrice: product.originalPrice,
-    currentPrice: product.currentPrice,
-    discount: product.discount,
-    description: product.description,
-    sku: product.sku,
-    category: product.category,
-    tags: product.tags,
-    rating: product.rating,
-    mainImage: product.mainImage,
-    features: product.features,
-    });
-
-const viewProductButtons = document.querySelectorAll("#productViewedButton");
-viewProductButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const href = button.getAttribute("href");
-    const productId = href.split("?id=")[1];
-    const product = productDatabase[productId];
-    analytics.track("Click View Product", {
-      name: product.name,
-      petCategory: product.petCategory,
-      productCategory: product.productCategory,
-      categoryPath: product.categoryPath,
-      originalPrice: product.originalPrice,
-      currentPrice: product.currentPrice,
-      discount: product.discount,
-      description: product.description,
-      sku: product.sku,
-      tags: product.tags,     
-    });
-  });
+  name: product.name,
+  petCategory: product.petCategory,
+  productCategory: product.productCategory,
+  categoryPath: product.categoryPath,
+  originalPrice: product.originalPrice,
+  currentPrice: product.currentPrice,
+  discount: product.discount,
+  description: product.description,
+  sku: product.sku,
+  category: product.category,
+  tags: tagsStringToArray(product.tags),
+  rating: product.rating,
+  mainImage: product.mainImage,
+  features: product.features,
 });
+
+function tagsStringToArray(tagsString) {
+  return tagsString.split(",").map((tag) => tag.trim());
+}
