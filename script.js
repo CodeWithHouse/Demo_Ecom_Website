@@ -146,6 +146,13 @@ console.log("Current URL:", window.location.href);
 // Hero Carousel Functionality - Simplified for Autoplay Only
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded");
+
+    // display current cart count
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        const currentCount = localStorage.getItem('cartCount');
+        cartCount.textContent = currentCount || '0';
+    }
     
     // Initialize the carousel
     const carousel = {
@@ -546,6 +553,7 @@ function initAddToCart() {
             if (cartCount) {
                 const currentCount = cart.reduce((acc, item) => acc + item.quantity, 0);
                 cartCount.textContent = currentCount;
+                localStorage.setItem('cartCount', currentCount);
             }
         });
     }
