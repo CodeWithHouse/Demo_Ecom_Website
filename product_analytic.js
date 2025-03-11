@@ -2,6 +2,7 @@ const addToCartButton = document.querySelector("#add_to_cart");
 const productId = new URLSearchParams(window.location.search).get("id");
 const product = productDatabase[productId];
 
+
 addToCartButton.addEventListener("click", () => {
   analytics.track("Add To Cart", {
     name: product.name,
