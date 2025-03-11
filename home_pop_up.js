@@ -11,6 +11,7 @@ async function waitForAnalytic (){
 
 
 async function renderPopUP() {
+    await waitForAnalytic();
     const profile = await getUserProfile();
     if (profile) {
        console.log (profile);
