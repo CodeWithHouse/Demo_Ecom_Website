@@ -1,3 +1,15 @@
+async function waitForAnalytic (){
+    return new Promise ((resolve, reject) => {
+        const interval = setInterval(() => {
+            if (analytics.user().id() || analytics.user().anonymousId()) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 100);
+    });
+}
+
+
 async function renderPopUP() {
     const profile = await getUserProfile();
     if (profile) {
