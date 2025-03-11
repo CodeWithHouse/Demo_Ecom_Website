@@ -96,6 +96,11 @@ async function renderPopUP() {
         if (profile && profile.traits && profile.traits.most_frequent_tags) {
             most_frequent_tags = profile.traits.most_frequent_tags;
         }
+
+        if (most_frequent_tags === "default") {
+            console.warn("No tags found, using default theme");
+            return
+        }
         
         console.log("Using theme:", most_frequent_tags);
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
