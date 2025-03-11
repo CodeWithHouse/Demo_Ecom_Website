@@ -4,7 +4,8 @@ if (typeof getUserProfile !== 'function') {
         console.log("Using mock getUserProfile function");
         return {
             traits: {
-                most_frequent_tags: "default"
+                most_frequent_tags: "Dog",
+                most_frequent_pet_category: "Dog"
             }
         };
     };
@@ -88,7 +89,12 @@ async function renderPopUP() {
             console.log("Got user profile:", profile);
         } catch (e) {
             console.warn("Error getting user profile, using default:", e);
-            profile = { traits: { most_frequent_tags: "default" } };
+            profile = { 
+                traits: { 
+                    most_frequent_tags: "default",
+                    most_frequent_pet_category: "Dog"
+                } 
+            };
         }
         
         // Get most frequent tags or use default
@@ -97,12 +103,20 @@ async function renderPopUP() {
             most_frequent_tags = profile.traits.most_frequent_tags;
         }
 
+        // Get most frequent pet category (default to Dog if not set)
+        let most_frequent_pet_category = "Dog";
+        if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
+            most_frequent_pet_category = profile.traits.most_frequent_pet_category;
+        }
+
         if (most_frequent_tags === "default") {
             console.warn("No tags found, using default theme");
-            return
+            // We'll continue showing the form, but with the default theme
+            most_frequent_tags = "default";
         }
         
         console.log("Using theme:", most_frequent_tags);
+        console.log("Using pet category:", most_frequent_pet_category);
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
         
         // Create popup overlay (background)
@@ -172,7 +186,66 @@ async function renderPopUP() {
                 </div>
                 
                 <!-- Form -->
-                <form id="pet-details-form">                    
+                <form id="pet-details-form">
+                    <div style="margin-bottom: 15px;">
+                        <label style="
+                            display: block;
+                            margin-bottom: 5px;
+                            font-weight: 500;
+                            color: #555;
+                            font-size: 14px;
+                        ">Pet Type</label>
+                        <div style="display: flex; gap: 10px;">
+                            <label style="
+                                display: flex;
+                                align-items: center;
+                                cursor: pointer;
+                            ">
+                                <input type="radio" name="petType" value="Dog" ${most_frequent_pet_category === "Dog" ? "checked" : ""} style="margin-right: 5px;">
+                                <span>Dog</span>
+                            </label>
+                            <label style="
+                                display: flex;
+                                align-items: center;
+                                cursor: pointer;
+                            ">
+                                <input type="radio" name="petType" value="Cat" ${most_frequent_pet_category === "Cat" ? "checked" : ""} style="margin-right: 5px;">
+                                <span>Cat</span>
+                            </label>
+                            <label style="
+                                display: flex;
+                                align-items: center;
+                                cursor: pointer;
+                            ">
+                                <input type="radio" name="petType" value="Other" ${most_frequent_pet_category !== "Dog" && most_frequent_pet_category !== "Cat" ? "checked" : ""} style="margin-right: 5px;">
+                                <span>Other</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="
+                            display: block;
+                            margin-bottom: 5px;
+                            font-weight: 500;
+                            color: #555;
+                            font-size: 14px;
+                        ">Pet Name</label>
+                        <input 
+                            type="text" 
+                            name="petName" 
+                            required 
+                            style="
+                                width: 100%;
+                                padding: 10px;
+                                border-radius: 4px;
+                                border: 1px solid #ddd;
+                                box-sizing: border-box;
+                                font-size: 14px;
+                            "
+                        >
+                    </div>
+                    
                     <div style="margin-bottom: 15px;">
                         <label style="
                             display: block;
