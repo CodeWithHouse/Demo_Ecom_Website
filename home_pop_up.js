@@ -2,35 +2,27 @@
 if (typeof getUserProfile !== 'function') {
     window.getUserProfile = async function() {
         console.log("Using mock getUserProfile function");
-        // Include last_product_viewed in the mock profile
-        const lastProductId = localStorage.getItem('lastViewedProductId');
         
-        // Only return a complete profile if we have a last viewed product
+        // Get last viewed product for the mock data
+        const lastProductId = localStorage.getItem('lastViewedProductId');
+        let lastProductData = null;
+        
         if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
             const product = window.productDatabase[lastProductId];
-            const lastProductViewed = {
+            lastProductData = {
                 id: lastProductId,
                 name: product.name,
                 image: product.mainImage
             };
-            
-            return {
-                traits: {
-                    most_frequent_tags: "Dog",
-                    most_frequent_pet_category: "Dog",
-                    last_product_viewed: lastProductViewed
-                }
-            };
-        } else {
-            // Return incomplete profile to test the validation
-            return {
-                traits: {
-                    most_frequent_tags: "Dog",
-                    most_frequent_pet_category: "Dog",
-                    // Intentionally missing last_product_viewed
-                }
-            };
         }
+        
+        return {
+            traits: {
+                most_frequent_tags: "Dog",
+                most_frequent_pet_category: "Dog",
+                last_product_viewed: lastProductData
+            }
+        };
     };
 }
 
@@ -101,20 +93,6 @@ const formThemes = {
     }
 };
 
-// Helper function to get last viewed product from localStorage
-function getLastViewedProduct() {
-    const lastProductId = localStorage.getItem('lastViewedProductId');
-    
-    if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
-        return {
-            id: lastProductId,
-            ...window.productDatabase[lastProductId]
-        };
-    }
-    
-    return null;
-}
-
 async function renderPopUP() {
     try {
         console.log("Starting popup rendering process");
@@ -127,46 +105,43 @@ async function renderPopUP() {
         } catch (e) {
             console.warn("Error getting user profile, using default:", e);
             profile = { 
-                traits: {} 
+                traits: { 
+                    most_frequent_tags: "default",
+                    most_frequent_pet_category: "Dog",
+                    last_product_viewed: null
+                } 
             };
         }
         
+        // Get most frequent tags or use default
+        let most_frequent_tags = "default";
+        if (profile && profile.traits && profile.traits.most_frequent_tags) {
+            most_frequent_tags = profile.traits.most_frequent_tags;
+        }
+        
+        // Get most frequent pet category (default to Dog if not set)
+        let most_frequent_pet_category = "Dog";
+        if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
+            most_frequent_pet_category = profile.traits.most_frequent_pet_category;
+        }
+        
+        // Get last product viewed
+        let last_product_viewed = null;
+        if (profile && profile.traits && profile.traits.last_product_viewed) {
+            last_product_viewed = profile.traits.last_product_viewed;
+        }
+        
         // Check if all required traits are available
-        if (!profile || !profile.traits) {
-            console.warn("User profile or traits not available, popup will not be shown");
+        if (most_frequent_tags === "default" || !last_product_viewed) {
+            console.warn("Required traits missing. Tags:", most_frequent_tags, "Last product:", last_product_viewed);
             return;
         }
         
-        // Extract required traits
-        const { most_frequent_tags, most_frequent_pet_category, last_product_viewed } = profile.traits;
-        
-        // Check if all required traits are present
-        if (!most_frequent_tags || !most_frequent_pet_category || !last_product_viewed) {
-            console.warn("Missing required traits for popup:", {
-                has_tags: !!most_frequent_tags,
-                has_pet_category: !!most_frequent_pet_category,
-                has_last_product: !!last_product_viewed
-            });
-            return;
-        }
-        
-        // Verify last_product_viewed has required properties
-        if (!last_product_viewed.name || !last_product_viewed.image) {
-            console.warn("Last product viewed is missing required properties");
-            return;
-        }
-        
-        // All traits are available, proceed with popup rendering
-        console.log("All required traits available, rendering popup");
-        
-        // Use the traits directly since we've verified they exist
-        const themeTag = most_frequent_tags;
-        
-        console.log("Using theme:", themeTag);
+        console.log("Using theme:", most_frequent_tags);
         console.log("Using pet category:", most_frequent_pet_category);
         console.log("Last product viewed:", last_product_viewed);
         
-        const themeData = formThemes[themeTag] || formThemes["default"];
+        const themeData = formThemes[most_frequent_tags] || formThemes["default"];
         
         // Create popup overlay (background)
         const overlay = document.createElement("div");
@@ -199,7 +174,7 @@ async function renderPopUP() {
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
         
-        // Create last viewed product HTML (we know it's available since we checked earlier)
+        // Create the last product viewed section
         const lastProductHTML = `
             <div style="
                 margin: 20px 0;
@@ -633,14 +608,19 @@ async function renderPopUP() {
     }
 }
 
-// Update the window object with a function to store the last viewed product ID
-// This will be called when product pages are loaded
-window.storeLastViewedProduct = function(productId) {
+// Function to store the last viewed product ID
+function storeLastViewedProduct(productId) {
     if (productId) {
         localStorage.setItem('lastViewedProductId', productId);
         console.log("Stored last viewed product ID:", productId);
     }
-};
+}
+
+// Helper function to check if we're on a product page
+function isProductPage() {
+    return window.location.pathname.includes('product.html') || 
+           window.location.pathname.endsWith('product');
+}
 
 // Always show popup during development (remove for production)
 function showPopupNow() {
@@ -658,17 +638,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
         if (productId) {
-            window.storeLastViewedProduct(productId);
+            storeLastViewedProduct(productId);
         }
     }
     
-    // Show popup only if we should (using traits validation in renderPopUP)
-    if (shouldShowPopup()) {
-        // Add a small delay to ensure everything is loaded
-        setTimeout(() => {
-            renderPopUP();
-        }, 2000);
-    }
+    // For immediate testing, uncomment this line:
+    showPopupNow();
+    
+    // For production use this instead:
+    // if (shouldShowPopup()) {
+    //     setTimeout(() => {
+    //         renderPopUP();
+    //     }, 3000);
+    // }
 });
 
 // Check if user has seen the popup recently
@@ -683,13 +665,6 @@ function shouldShowPopup() {
     }
     
     return false;
-}
-
-// Helper function to check if we're on a product page
-// Reusing the same function from script.js
-function isProductPage() {
-    return window.location.pathname.includes('product.html') || 
-           window.location.pathname.endsWith('product');
 }
 
 // Add a global function to manually trigger the popup (for testing)
