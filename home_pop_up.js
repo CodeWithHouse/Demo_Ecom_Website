@@ -2,26 +2,34 @@
 if (typeof getUserProfile !== 'function') {
     window.getUserProfile = async function() {
         console.log("Using mock getUserProfile function");
-        
-        // Get last viewed product for the mock profile
+        // Include last_product_viewed in the mock profile
         const lastProductId = localStorage.getItem('lastViewedProductId');
-        let lastProductData = null;
         
+        // Only return a complete profile if we have a last viewed product
         if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
             const product = window.productDatabase[lastProductId];
-            lastProductData = {
+            const lastProductViewed = {
                 id: lastProductId,
                 name: product.name
             };
+            
+            return {
+                traits: {
+                    most_frequent_tags: "Dog",
+                    most_frequent_pet_category: "Dog",
+                    last_product_viewed: lastProductViewed
+                }
+            };
+        } else {
+            // Return incomplete profile to test the validation
+            return {
+                traits: {
+                    most_frequent_tags: "Dog",
+                    most_frequent_pet_category: "Dog",
+                    // Intentionally missing last_product_viewed
+                }
+            };
         }
-        
-        return {
-            traits: {
-                most_frequent_tags: "Dog",
-                most_frequent_pet_category: "Dog",
-                last_product_viewed: lastProductData
-            }
-        };
     };
 }
 
@@ -40,11 +48,11 @@ async function waitForAnalytic() {
     }
 
     return new Promise((resolve, reject) => {
-        // Timeout after 3 seconds to prevent hanging
+        // Timeout after 1 second to prevent hanging and ensure quick display
         const timeout = setTimeout(() => {
             console.log("Analytics wait timed out - proceeding anyway");
             resolve();
-        }, 3000);
+        }, 1000);
 
         const interval = setInterval(() => {
             if (!analytics || !analytics.user) {
@@ -55,7 +63,7 @@ async function waitForAnalytic() {
                 clearTimeout(timeout);
                 resolve();
             }
-        }, 100);
+        }, 50); // Check more frequently
     });
 }
 
@@ -106,34 +114,26 @@ async function renderPopUP() {
             profile = { 
                 traits: { 
                     most_frequent_tags: "default",
-                    most_frequent_pet_category: "Dog",
-                    last_product_viewed: null
+                    most_frequent_pet_category: "Dog"
                 } 
             };
         }
         
-        // Get most frequent tags or use default
-        let most_frequent_tags = "default";
-        if (profile && profile.traits && profile.traits.most_frequent_tags) {
-            most_frequent_tags = profile.traits.most_frequent_tags;
-        }
-        
-        // Return early if no tags are found
-        if (most_frequent_tags === "default") {
-            console.warn("No tags found, using default theme");
+        // Check if required traits are available
+        if (!profile || !profile.traits) {
+            console.warn("User profile or traits not available, popup will not be shown");
             return;
         }
         
-        // Get most frequent pet category (default to Dog if not set)
-        let most_frequent_pet_category = "Dog";
-        if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
-            most_frequent_pet_category = profile.traits.most_frequent_pet_category;
-        }
+        const { most_frequent_tags, most_frequent_pet_category, last_product_viewed } = profile.traits;
         
-        // Get last product viewed
-        let last_product_viewed = null;
-        if (profile && profile.traits && profile.traits.last_product_viewed) {
-            last_product_viewed = profile.traits.last_product_viewed;
+        // MUST have both most_frequent_tags and last_product_viewed
+        if (!most_frequent_tags || most_frequent_tags === "default" || !last_product_viewed || !last_product_viewed.name) {
+            console.warn("Required traits missing:", {
+                has_valid_tags: most_frequent_tags && most_frequent_tags !== "default",
+                has_last_product: last_product_viewed && last_product_viewed.name
+            });
+            return;
         }
         
         console.log("Using theme:", most_frequent_tags);
@@ -173,33 +173,30 @@ async function renderPopUP() {
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
         
-        // Create last product viewed HTML if available
-        let lastProductHTML = '';
-        if (last_product_viewed && last_product_viewed.name) {
-            lastProductHTML = `
-                <div style="
-                    margin: 20px 0;
-                    padding: 15px;
-                    background-color: #f9f9f9;
-                    border-radius: 6px;
-                    border: 1px solid #eee;
-                ">
-                    <h3 style="
-                        margin: 0 0 10px 0;
+        // Last product viewed section
+        const lastProductHTML = `
+            <div style="
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 6px;
+                border: 1px solid #eee;
+            ">
+                <h3 style="
+                    margin: 0 0 10px 0;
+                    color: #333;
+                    font-size: 16px;
+                    font-weight: 500;
+                ">Recently Viewed</h3>
+                <div>
+                    <h4 style="
+                        margin: 0;
+                        font-size: 14px;
                         color: #333;
-                        font-size: 16px;
-                        font-weight: 500;
-                    ">Recently Viewed</h3>
-                    <div>
-                        <h4 style="
-                            margin: 0;
-                            font-size: 14px;
-                            color: #333;
-                        ">${last_product_viewed.name}</h4>
-                    </div>
+                    ">${last_product_viewed.name}</h4>
                 </div>
-            `;
-        }
+            </div>
+        `;
         
         // Form HTML content
         popup.innerHTML = `
@@ -487,12 +484,12 @@ async function renderPopUP() {
         overlay.appendChild(popup);
         document.body.appendChild(overlay);
         
-        // Show the popup with animation
-        setTimeout(() => {
+        // Show the popup with animation (faster transition)
+        requestAnimationFrame(() => {
             overlay.style.opacity = "1";
             popup.style.opacity = "1";
             popup.style.transform = "scale(1)";
-        }, 100);
+        });
         
         // Close popup function
         const closePopup = () => {
@@ -531,16 +528,12 @@ async function renderPopUP() {
                 petAge: formData.get("petAge"),
                 firstName: formData.get("firstName"),
                 lastName: formData.get("lastName"),
-                email: formData.get("email")
-            };
-            
-            // Add last product viewed data if available
-            if (last_product_viewed) {
-                userData.lastProductViewed = {
+                email: formData.get("email"),
+                lastProductViewed: {
                     id: last_product_viewed.id,
                     name: last_product_viewed.name
-                };
-            }
+                }
+            };
             
             // Log the data (replace with your actual submission logic)
             console.log("Form submitted:", userData);
@@ -555,21 +548,16 @@ async function renderPopUP() {
             // Update analytics if available
             if (typeof analytics !== 'undefined') {
                 try {
-                    const analyticsData = {
+                    analytics.identify({
                         firstName: userData.firstName,
                         lastName: userData.lastName,
                         email: userData.email,
                         petType: userData.petType,
                         petName: userData.petName,
-                        petAge: userData.petAge
-                    };
+                        petAge: userData.petAge,
+                        lastProductViewed: userData.lastProductViewed
+                    });
                     
-                    // Add last product viewed if available
-                    if (userData.lastProductViewed) {
-                        analyticsData.lastProductViewed = userData.lastProductViewed;
-                    }
-                    
-                    analytics.identify(analyticsData);
                     analytics.track('Pet Details Submitted', userData);
                 } catch (e) {
                     console.warn("Error tracking analytics:", e);
@@ -593,12 +581,6 @@ function storeLastViewedProduct(productId) {
     }
 }
 
-// Helper function to check if we're on a product page
-function isProductPage() {
-    return window.location.pathname.includes('product.html') || 
-           window.location.pathname.endsWith('product');
-}
-
 // Always show popup during development (remove for production)
 function showPopupNow() {
     console.log("Forcing popup to show");
@@ -619,15 +601,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // For immediate testing, uncomment this line:
-    showPopupNow();
-    
-    // For production use this instead:
-    // if (shouldShowPopup()) {
-    //     setTimeout(() => {
-    //         renderPopUP();
-    //     }, 3000);
-    // }
+    // Show popup on all pages if it hasn't been shown recently
+    if (shouldShowPopup()) {
+        // Quick display - less than 3 seconds
+        setTimeout(() => {
+            renderPopUP();
+        }, 1000); // Just 1 second delay for quick display
+    }
 });
 
 // Check if user has seen the popup recently
@@ -642,6 +622,12 @@ function shouldShowPopup() {
     }
     
     return false;
+}
+
+// Helper function to check if we're on a product page
+function isProductPage() {
+    return window.location.pathname.includes('product.html') || 
+           window.location.pathname.endsWith('product');
 }
 
 // Add a global function to manually trigger the popup (for testing)
