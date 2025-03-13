@@ -4,24 +4,33 @@ if (typeof getUserProfile !== 'function') {
         console.log("Using mock getUserProfile function");
         // Include last_product_viewed in the mock profile
         const lastProductId = localStorage.getItem('lastViewedProductId');
-        let lastProductViewed = null;
         
+        // Only return a complete profile if we have a last viewed product
         if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
             const product = window.productDatabase[lastProductId];
-            lastProductViewed = {
+            const lastProductViewed = {
                 id: lastProductId,
                 name: product.name,
                 image: product.mainImage
             };
+            
+            return {
+                traits: {
+                    most_frequent_tags: "Dog",
+                    most_frequent_pet_category: "Dog",
+                    last_product_viewed: lastProductViewed
+                }
+            };
+        } else {
+            // Return incomplete profile to test the validation
+            return {
+                traits: {
+                    most_frequent_tags: "Dog",
+                    most_frequent_pet_category: "Dog",
+                    // Intentionally missing last_product_viewed
+                }
+            };
         }
-        
-        return {
-            traits: {
-                most_frequent_tags: "Dog",
-                most_frequent_pet_category: "Dog",
-                last_product_viewed: lastProductViewed
-            }
-        };
     };
 }
 
@@ -118,46 +127,46 @@ async function renderPopUP() {
         } catch (e) {
             console.warn("Error getting user profile, using default:", e);
             profile = { 
-                traits: { 
-                    most_frequent_tags: "default",
-                    most_frequent_pet_category: "Dog",
-                    last_product_viewed: null
-                } 
+                traits: {} 
             };
         }
         
-        // Get most frequent tags or use default
-        let most_frequent_tags = "default";
-        if (profile && profile.traits && profile.traits.most_frequent_tags) {
-            most_frequent_tags = profile.traits.most_frequent_tags;
+        // Check if all required traits are available
+        if (!profile || !profile.traits) {
+            console.warn("User profile or traits not available, popup will not be shown");
+            return;
         }
         
-        // Get most frequent pet category (default to Dog if not set)
-        let most_frequent_pet_category = "Dog";
-        if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
-            most_frequent_pet_category = profile.traits.most_frequent_pet_category;
+        // Extract required traits
+        const { most_frequent_tags, most_frequent_pet_category, last_product_viewed } = profile.traits;
+        
+        // Check if all required traits are present
+        if (!most_frequent_tags || !most_frequent_pet_category || !last_product_viewed) {
+            console.warn("Missing required traits for popup:", {
+                has_tags: !!most_frequent_tags,
+                has_pet_category: !!most_frequent_pet_category,
+                has_last_product: !!last_product_viewed
+            });
+            return;
         }
         
-        // Get last viewed product 
-        let lastProductViewed = null;
-        if (profile && profile.traits && profile.traits.last_product_viewed) {
-            lastProductViewed = profile.traits.last_product_viewed;
-        } else {
-            // Try to get it directly from localStorage/productDatabase as a fallback
-            lastProductViewed = getLastViewedProduct();
-        }
-
-        if (most_frequent_tags === "default") {
-            console.warn("No tags found, using default theme");
-            // We'll continue showing the form, but with the default theme
-            most_frequent_tags = "default";
+        // Verify last_product_viewed has required properties
+        if (!last_product_viewed.name || !last_product_viewed.image) {
+            console.warn("Last product viewed is missing required properties");
+            return;
         }
         
-        console.log("Using theme:", most_frequent_tags);
+        // All traits are available, proceed with popup rendering
+        console.log("All required traits available, rendering popup");
+        
+        // Use the traits directly since we've verified they exist
+        const themeTag = most_frequent_tags;
+        
+        console.log("Using theme:", themeTag);
         console.log("Using pet category:", most_frequent_pet_category);
-        console.log("Last product viewed:", lastProductViewed);
+        console.log("Last product viewed:", last_product_viewed);
         
-        const themeData = formThemes[most_frequent_tags] || formThemes["default"];
+        const themeData = formThemes[themeTag] || formThemes["default"];
         
         // Create popup overlay (background)
         const overlay = document.createElement("div");
@@ -190,60 +199,57 @@ async function renderPopUP() {
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
         
-        // Create last viewed product HTML if available
-        let lastProductHTML = '';
-        if (lastProductViewed && lastProductViewed.name && lastProductViewed.mainImage) {
-            lastProductHTML = `
+        // Create last viewed product HTML (we know it's available since we checked earlier)
+        const lastProductHTML = `
+            <div style="
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 6px;
+                border: 1px solid #eee;
+            ">
+                <h3 style="
+                    margin: 0 0 10px 0;
+                    color: #333;
+                    font-size: 16px;
+                    font-weight: 500;
+                ">Recently Viewed</h3>
                 <div style="
-                    margin: 20px 0;
-                    padding: 15px;
-                    background-color: #f9f9f9;
-                    border-radius: 6px;
-                    border: 1px solid #eee;
+                    display: flex;
+                    align-items: center;
                 ">
-                    <h3 style="
-                        margin: 0 0 10px 0;
-                        color: #333;
-                        font-size: 16px;
-                        font-weight: 500;
-                    ">Recently Viewed</h3>
                     <div style="
-                        display: flex;
-                        align-items: center;
+                        width: 60px;
+                        height: 60px;
+                        min-width: 60px;
+                        margin-right: 15px;
+                        border-radius: 4px;
+                        overflow: hidden;
                     ">
-                        <div style="
-                            width: 60px;
-                            height: 60px;
-                            min-width: 60px;
-                            margin-right: 15px;
-                            border-radius: 4px;
-                            overflow: hidden;
-                        ">
-                            <img src="${lastProductViewed.mainImage}" 
-                                alt="${lastProductViewed.name}" 
-                                style="
-                                    width: 100%;
-                                    height: 100%;
-                                    object-fit: contain;
-                                "
-                            >
-                        </div>
-                        <div>
-                            <h4 style="
-                                margin: 0 0 5px 0;
-                                font-size: 14px;
-                                color: #333;
-                            ">${lastProductViewed.name}</h4>
-                            <a href="product.html?id=${lastProductViewed.id}" style="
-                                font-size: 12px;
-                                color: ${themeData.color};
-                                text-decoration: none;
-                            ">View again</a>
-                        </div>
+                        <img src="${last_product_viewed.image}" 
+                            alt="${last_product_viewed.name}" 
+                            style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                            "
+                        >
+                    </div>
+                    <div>
+                        <h4 style="
+                            margin: 0 0 5px 0;
+                            font-size: 14px;
+                            color: #333;
+                        ">${last_product_viewed.name}</h4>
+                        <a href="product.html?id=${last_product_viewed.id}" style="
+                            font-size: 12px;
+                            color: ${themeData.color};
+                            text-decoration: none;
+                        ">View again</a>
                     </div>
                 </div>
-            `;
-        }
+            </div>
+        `;
         
         // Form HTML content
         popup.innerHTML = `
@@ -576,10 +582,10 @@ async function renderPopUP() {
                 firstName: formData.get("firstName"),
                 lastName: formData.get("lastName"),
                 email: formData.get("email"),
-                lastProductViewed: lastProductViewed ? {
-                    id: lastProductViewed.id,
-                    name: lastProductViewed.name
-                } : null
+                lastProductViewed: {
+                    id: last_product_viewed.id,
+                    name: last_product_viewed.name
+                }
             };
             
             // Log the data (replace with your actual submission logic)
@@ -656,15 +662,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // For immediate testing, uncomment this line:
-    showPopupNow();
-    
-    // For production use this instead:
-    // if (shouldShowPopup()) {
-    //     setTimeout(() => {
-    //         renderPopUP();
-    //     }, 3000);
-    // }
+    // Show popup only if we should (using traits validation in renderPopUP)
+    if (shouldShowPopup()) {
+        // Add a small delay to ensure everything is loaded
+        setTimeout(() => {
+            renderPopUP();
+        }, 2000);
+    }
 });
 
 // Check if user has seen the popup recently
