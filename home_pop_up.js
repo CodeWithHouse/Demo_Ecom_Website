@@ -2,69 +2,25 @@
 if (typeof getUserProfile !== 'function') {
     window.getUserProfile = async function() {
         console.log("Using mock getUserProfile function");
-        // Include last_product_viewed in the mock profile
-        const lastProductId = localStorage.getItem('lastViewedProductId');
         
-        // Only return a complete profile if we have a last viewed product
-        if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
-            const product = window.productDatabase[lastProductId];
-            const lastProductViewed = {
-                id: lastProductId,
-                name: product.name
-            };
-            
-            return {
-                traits: {
-                    most_frequent_tags: "Dog",
-                    most_frequent_pet_category: "Dog",
-                    last_product_viewed: lastProductViewed
+        // For testing, always return valid data
+        return {
+            traits: {
+                most_frequent_tags: "Dog",
+                most_frequent_pet_category: "Dog",
+                last_product_viewed: {
+                    id: "1",
+                    name: "Sample Product"
                 }
-            };
-        } else {
-            // Return incomplete profile to test the validation
-            return {
-                traits: {
-                    most_frequent_tags: "Dog",
-                    most_frequent_pet_category: "Dog",
-                    // Intentionally missing last_product_viewed
-                }
-            };
-        }
+            }
+        };
     };
 }
 
+// Simplified analytics wait function
 async function waitForAnalytic() {
-    // For testing - if analytics doesn't exist, create a mock
-    if (typeof analytics === 'undefined') {
-        console.log("Creating mock analytics object for testing");
-        window.analytics = {
-            user: function() {
-                return {
-                    id: function() { return "test-id"; },
-                    anonymousId: function() { return "anon-id"; }
-                };
-            }
-        };
-    }
-
-    return new Promise((resolve, reject) => {
-        // Timeout after 1 second to prevent hanging and ensure quick display
-        const timeout = setTimeout(() => {
-            console.log("Analytics wait timed out - proceeding anyway");
-            resolve();
-        }, 1000);
-
-        const interval = setInterval(() => {
-            if (!analytics || !analytics.user) {
-                return;
-            }
-            if (analytics.user().id() || analytics.user().anonymousId()) {
-                clearInterval(interval);
-                clearTimeout(timeout);
-                resolve();
-            }
-        }, 50); // Check more frequently
-    });
+    console.log("Waiting for analytics...");
+    return Promise.resolve(); // Always resolve immediately
 }
 
 const formThemes = {
@@ -103,44 +59,35 @@ const formThemes = {
 async function renderPopUP() {
     try {
         console.log("Starting popup rendering process");
-        await waitForAnalytic();
         
-        let profile;
+        // Set default values in case anything fails
+        let most_frequent_tags = "Dog"; // Default to Dog
+        let most_frequent_pet_category = "Dog";
+        let last_product_viewed = { id: "1", name: "Sample Product" };
+        
         try {
-            profile = await getUserProfile();
+            await waitForAnalytic();
+            const profile = await getUserProfile();
             console.log("Got user profile:", profile);
+            
+            if (profile && profile.traits) {
+                // Extract values with fallbacks
+                most_frequent_tags = profile.traits.most_frequent_tags || most_frequent_tags;
+                most_frequent_pet_category = profile.traits.most_frequent_pet_category || most_frequent_pet_category;
+                last_product_viewed = profile.traits.last_product_viewed || last_product_viewed;
+            }
         } catch (e) {
-            console.warn("Error getting user profile, using default:", e);
-            profile = { 
-                traits: { 
-                    most_frequent_tags: "default",
-                    most_frequent_pet_category: "Dog"
-                } 
-            };
-        }
-        
-        // Check if required traits are available
-        if (!profile || !profile.traits) {
-            console.warn("User profile or traits not available, popup will not be shown");
-            return;
-        }
-        
-        const { most_frequent_tags, most_frequent_pet_category, last_product_viewed } = profile.traits;
-        
-        // MUST have both most_frequent_tags and last_product_viewed
-        if (!most_frequent_tags || most_frequent_tags === "default" || !last_product_viewed || !last_product_viewed.name) {
-            console.warn("Required traits missing:", {
-                has_valid_tags: most_frequent_tags && most_frequent_tags !== "default",
-                has_last_product: last_product_viewed && last_product_viewed.name
-            });
-            return;
+            console.warn("Error getting user profile, using defaults:", e);
+            // Continue with default values
         }
         
         console.log("Using theme:", most_frequent_tags);
         console.log("Using pet category:", most_frequent_pet_category);
         console.log("Last product viewed:", last_product_viewed);
         
+        // Get theme data (with fallback)
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
+        console.log("Using theme data:", themeData);
         
         // Create popup overlay (background)
         const overlay = document.createElement("div");
@@ -474,22 +421,27 @@ async function renderPopUP() {
             </div>
         `;
         
+        console.log("Popup HTML created");
+        
         // Remove any existing popups
         const existingOverlay = document.getElementById("pet-form-overlay");
         if (existingOverlay) {
+            console.log("Removing existing overlay");
             existingOverlay.remove();
         }
         
         // Add popup to the overlay, then add overlay to the DOM
         overlay.appendChild(popup);
         document.body.appendChild(overlay);
+        console.log("Popup added to DOM");
         
         // Show the popup with animation (faster transition)
-        requestAnimationFrame(() => {
+        setTimeout(() => {
+            console.log("Setting popup visible");
             overlay.style.opacity = "1";
             popup.style.opacity = "1";
             popup.style.transform = "scale(1)";
-        });
+        }, 10); // Very short timeout
         
         // Close popup function
         const closePopup = () => {
@@ -506,19 +458,24 @@ async function renderPopUP() {
         };
         
         // Add event listener to close button
-        popup.querySelector(".popup-close").addEventListener("click", closePopup);
+        popup.querySelector(".popup-close").addEventListener("click", function() {
+            console.log("Close button clicked");
+            closePopup();
+        });
         
         // Close when clicking outside the popup
-        overlay.addEventListener("click", (e) => {
+        overlay.addEventListener("click", function(e) {
             if (e.target === overlay) {
+                console.log("Overlay clicked");
                 closePopup();
             }
         });
         
         // Handle form submission
         const form = popup.querySelector("#pet-details-form");
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
+            console.log("Form submitted");
             
             // Get form data
             const formData = new FormData(form);
@@ -535,8 +492,8 @@ async function renderPopUP() {
                 }
             };
             
-            // Log the data (replace with your actual submission logic)
-            console.log("Form submitted:", userData);
+            // Log the data
+            console.log("Form data:", userData);
             
             // Store user data in localStorage
             localStorage.setItem('petCircleUserData', JSON.stringify(userData));
@@ -564,12 +521,13 @@ async function renderPopUP() {
                 }
             }
             
-            // Close popup after success (5 seconds)
+            // Close popup after success
             setTimeout(closePopup, 5000);
         });
         
     } catch (error) {
         console.error("Error rendering popup:", error);
+        alert("Error displaying popup: " + error.message); // Alert for debugging
     }
 }
 
@@ -581,14 +539,13 @@ function storeLastViewedProduct(productId) {
     }
 }
 
-// Always show popup during development (remove for production)
-function showPopupNow() {
-    console.log("Forcing popup to show");
-    localStorage.removeItem('lastPopupShown');
-    renderPopUP();
+// Helper function to check if we're on a product page
+function isProductPage() {
+    return window.location.pathname.includes('product.html') || 
+           window.location.pathname.endsWith('product');
 }
 
-// Initialize popup
+// Initialize popup - make it run immediately
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, initializing popup");
     
@@ -601,34 +558,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Show popup on all pages if it hasn't been shown recently
-    if (shouldShowPopup()) {
-        // Quick display - less than 3 seconds
-        setTimeout(() => {
-            renderPopUP();
-        }, 1000); // Just 1 second delay for quick display
-    }
+    // Force display popup after a minimal delay
+    console.log("Setting timeout to display popup");
+    setTimeout(function() {
+        console.log("Timeout triggered, showing popup");
+        renderPopUP();
+    }, 500);
 });
 
-// Check if user has seen the popup recently
-function shouldShowPopup() {
-    const lastShown = localStorage.getItem('lastPopupShown');
-    const now = new Date().getTime();
-    
-    // Show popup if user hasn't seen it in the last 3 days
-    if (!lastShown || (now - parseInt(lastShown) > 3 * 24 * 60 * 60 * 1000)) {
-        localStorage.setItem('lastPopupShown', now);
-        return true;
-    }
-    
-    return false;
-}
-
-// Helper function to check if we're on a product page
-function isProductPage() {
-    return window.location.pathname.includes('product.html') || 
-           window.location.pathname.endsWith('product');
-}
-
 // Add a global function to manually trigger the popup (for testing)
-window.showPetFormPopup = showPopupNow;
+window.showPetFormPopup = function() {
+    console.log("Manual popup trigger called");
+    renderPopUP();
+};
+
+// Ensure the function is available globally
+console.log("Script loaded. showPetFormPopup function available globally.");
