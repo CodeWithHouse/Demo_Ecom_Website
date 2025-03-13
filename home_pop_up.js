@@ -1,3 +1,83 @@
+// Mock getUserProfile if it doesn't exist (for testing purposes)
+if (typeof getUserProfile !== 'function') {
+    window.getUserProfile = async function() {
+        console.log("Using mock getUserProfile function");
+        return {
+            traits: {
+                most_frequent_tags: "Dog",
+                most_frequent_pet_category: "Dog"
+            }
+        };
+    };
+}
+
+async function waitForAnalytic() {
+    // For testing - if analytics doesn't exist, create a mock
+    if (typeof analytics === 'undefined') {
+        console.log("Creating mock analytics object for testing");
+        window.analytics = {
+            user: function() {
+                return {
+                    id: function() { return "test-id"; },
+                    anonymousId: function() { return "anon-id"; }
+                };
+            }
+        };
+    }
+
+    return new Promise((resolve, reject) => {
+        // Timeout after 3 seconds to prevent hanging
+        const timeout = setTimeout(() => {
+            console.log("Analytics wait timed out - proceeding anyway");
+            resolve();
+        }, 3000);
+
+        const interval = setInterval(() => {
+            if (!analytics || !analytics.user) {
+                return;
+            }
+            if (analytics.user().id() || analytics.user().anonymousId()) {
+                clearInterval(interval);
+                clearTimeout(timeout);
+                resolve();
+            }
+        }, 100);
+    });
+}
+
+const formThemes = {
+    "Nutrition": {
+        title: "Get Nutrition Recommendations",
+        buttonText: "Get Recommendations",
+        icon: "fas fa-bone",
+        color: "#8bc34a"
+    },
+    "Toys": {
+        title: "Find Perfect Toys For Your Pet",
+        buttonText: "Find Toys",
+        icon: "fas fa-basketball-ball",
+        color: "#ff9800"
+    },
+    "Dog": {
+        title: "Enjoy 10% Off For Your Dog Fur Baby",
+        buttonText: "Get Discounts",
+        icon: "fas fa-dog",
+        color: "#2196f3"
+    },
+    "Cat": {
+        title: "Personalize Your Cat's Experience",
+        buttonText: "Personalize",
+        icon: "fas fa-cat",
+        color: "#9c27b0"
+    },
+    "default": {
+        title: "Personalize Your Pet's Experience",
+        buttonText: "Submit",
+        icon: "fas fa-paw",
+        color: "#3f51b5"
+    }
+};
+
 async function renderPopUP() {
     try {
         console.log("Starting popup rendering process");
@@ -12,8 +92,7 @@ async function renderPopUP() {
             profile = { 
                 traits: { 
                     most_frequent_tags: "default",
-                    most_frequent_pet_category: "Dog",
-                    last_product_viewed: "No recent products viewed"
+                    most_frequent_pet_category: "Dog"
                 } 
             };
         }
@@ -33,8 +112,8 @@ async function renderPopUP() {
             most_frequent_pet_category = profile.traits.most_frequent_pet_category;
         }
 
-        // Get last product viewed (default to empty string if not set)
-        let last_product_viewed = "No recent products viewed";
+        // Get most frequent last product viewed (default to Everyday Cosy Pet Bed Round Cuddler if not set)
+        let last_product_viewed = "Everyday Cosy Pet Bed Round Cuddler";
         if (profile && profile.traits && profile.traits.last_product_viewed) {
             last_product_viewed = profile.traits.last_product_viewed;
         }
@@ -47,7 +126,6 @@ async function renderPopUP() {
         
         console.log("Using theme:", most_frequent_tags);
         console.log("Using pet category:", most_frequent_pet_category);
-        console.log("Last product viewed:", last_product_viewed);
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
         
         // Create popup overlay (background)
@@ -114,27 +192,6 @@ async function renderPopUP() {
                         font-size: 20px;
                         font-weight: 600;
                     ">${themeData.title}</h2>
-                </div>
-                
-                <!-- Last Product Viewed Section -->
-                <div style="
-                    margin-bottom: 20px;
-                    padding: 15px;
-                    background-color: #f7f9fc;
-                    border-radius: 6px;
-                    border-left: 3px solid ${themeData.color};
-                ">
-                    <h3 style="
-                        margin: 0 0 8px 0;
-                        color: #333;
-                        font-size: 16px;
-                        font-weight: 500;
-                    ">Last Product Viewed</h3>
-                    <p style="
-                        margin: 0;
-                        color: #555;
-                        font-size: 14px;
-                    ">${last_product_viewed}</p>
                 </div>
                 
                 <!-- Form -->
@@ -476,3 +533,42 @@ async function renderPopUP() {
         console.error("Error rendering popup:", error);
     }
 }
+
+// Always show popup during development (remove for production)
+function showPopupNow() {
+    console.log("Forcing popup to show");
+    localStorage.removeItem('lastPopupShown');
+    renderPopUP();
+}
+
+// Initialize popup
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing popup");
+    
+    // For immediate testing, uncomment this line:
+    showPopupNow();
+    
+    // For production use this instead:
+    // if (shouldShowPopup()) {
+    //     setTimeout(() => {
+    //         renderPopUP();
+    //     }, 3000);
+    // }
+});
+
+// Check if user has seen the popup recently
+function shouldShowPopup() {
+    const lastShown = localStorage.getItem('lastPopupShown');
+    const now = new Date().getTime();
+    
+    // Show popup if user hasn't seen it in the last 3 days
+    if (!lastShown || (now - parseInt(lastShown) > 3 * 24 * 60 * 60 * 1000)) {
+        localStorage.setItem('lastPopupShown', now);
+        return true;
+    }
+    
+    return false;
+}
+
+// Add a global function to manually trigger the popup (for testing)
+window.showPetFormPopup = showPopupNow;
