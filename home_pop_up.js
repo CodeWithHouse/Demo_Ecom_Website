@@ -197,6 +197,23 @@ async function renderPopUP() {
                 <!-- Form -->
                 <form id="pet-details-form">
                     <div style="margin-bottom: 15px;">
+                    <div style="margin-bottom: 15px;">
+                        <label style="
+                            display: block;
+                            margin-bottom: 5px;
+                            font-weight: 500;
+                            color: #555;
+                            font-size: 14px;
+                        ">Last Product Viewed</label>
+                        <div style="
+                            padding: 10px;
+                            border-radius: 4px;
+                            border: 1px solid #ddd;
+                            background-color: #f9f9f9;
+                            font-size: 14px;
+                            color: #333;
+                        ">${last_product_viewed}</div>
+                    </div>
                         <label style="
                             display: block;
                             margin-bottom: 5px;
