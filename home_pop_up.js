@@ -1,93 +1,54 @@
-// Mock getUserProfile if it doesn't exist (for testing purposes)
-if (typeof getUserProfile !== 'function') {
-    window.getUserProfile = async function() {
-        console.log("Using mock getUserProfile function");
-        
-        // For testing, always return valid data
-        return {
-            traits: {
-                most_frequent_tags: "Dog",
-                most_frequent_pet_category: "Dog",
-                last_product_viewed: {
-                    id: "1",
-                    name: "Sample Product"
-                }
-            }
-        };
-    };
-}
-
-// Simplified analytics wait function
-async function waitForAnalytic() {
-    console.log("Waiting for analytics...");
-    return Promise.resolve(); // Always resolve immediately
-}
-
-const formThemes = {
-    "Nutrition": {
-        title: "Get Nutrition Recommendations",
-        buttonText: "Get Recommendations",
-        icon: "fas fa-bone",
-        color: "#8bc34a"
-    },
-    "Toys": {
-        title: "Find Perfect Toys For Your Pet",
-        buttonText: "Find Toys",
-        icon: "fas fa-basketball-ball",
-        color: "#ff9800"
-    },
-    "Dog": {
-        title: "Enjoy 10% Off For Your Dog Fur Baby",
-        buttonText: "Get Discounts",
-        icon: "fas fa-dog",
-        color: "#2196f3"
-    },
-    "Cat": {
-        title: "Personalize Your Cat's Experience",
-        buttonText: "Personalize",
-        icon: "fas fa-cat",
-        color: "#9c27b0"
-    },
-    "default": {
-        title: "Personalize Your Pet's Experience",
-        buttonText: "Submit",
-        icon: "fas fa-paw",
-        color: "#3f51b5"
-    }
-};
-
 async function renderPopUP() {
     try {
         console.log("Starting popup rendering process");
+        await waitForAnalytic();
         
-        // Set default values in case anything fails
-        let most_frequent_tags = "Dog"; // Default to Dog
-        let most_frequent_pet_category = "Dog";
-        let last_product_viewed = { id: "1", name: "Sample Product" };
-        
+        let profile;
         try {
-            await waitForAnalytic();
-            const profile = await getUserProfile();
+            profile = await getUserProfile();
             console.log("Got user profile:", profile);
-            
-            if (profile && profile.traits) {
-                // Extract values with fallbacks
-                most_frequent_tags = profile.traits.most_frequent_tags || most_frequent_tags;
-                most_frequent_pet_category = profile.traits.most_frequent_pet_category || most_frequent_pet_category;
-                last_product_viewed = profile.traits.last_product_viewed || last_product_viewed;
-            }
         } catch (e) {
-            console.warn("Error getting user profile, using defaults:", e);
-            // Continue with default values
+            console.warn("Error getting user profile, using default:", e);
+            profile = { 
+                traits: { 
+                    most_frequent_tags: "default",
+                    most_frequent_pet_category: "Dog",
+                    last_product_viewed: "No recent products viewed"
+                } 
+            };
+        }
+        
+        // Get most frequent tags or use default
+        let most_frequent_tags = "default";
+        if (profile && profile.traits && profile.traits.most_frequent_tags) {
+            most_frequent_tags = profile.traits.most_frequent_tags;
+        }
+        if (most_frequent_tags === "default") {
+            console.warn("No tags found, using default theme");
+            return;
+        }
+        // Get most frequent pet category (default to Dog if not set)
+        let most_frequent_pet_category = "Dog";
+        if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
+            most_frequent_pet_category = profile.traits.most_frequent_pet_category;
+        }
+
+        // Get last product viewed (default to empty string if not set)
+        let last_product_viewed = "No recent products viewed";
+        if (profile && profile.traits && profile.traits.last_product_viewed) {
+            last_product_viewed = profile.traits.last_product_viewed;
+        }
+
+        if (most_frequent_tags === "default") {
+            console.warn("No tags found, using default theme");
+            // We'll continue showing the form, but with the default theme
+            most_frequent_tags = "default";
         }
         
         console.log("Using theme:", most_frequent_tags);
         console.log("Using pet category:", most_frequent_pet_category);
         console.log("Last product viewed:", last_product_viewed);
-        
-        // Get theme data (with fallback)
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
-        console.log("Using theme data:", themeData);
         
         // Create popup overlay (background)
         const overlay = document.createElement("div");
@@ -119,31 +80,6 @@ async function renderPopUP() {
         popup.style.opacity = "0";
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-        
-        // Last product viewed section
-        const lastProductHTML = `
-            <div style="
-                margin: 20px 0;
-                padding: 15px;
-                background-color: #f9f9f9;
-                border-radius: 6px;
-                border: 1px solid #eee;
-            ">
-                <h3 style="
-                    margin: 0 0 10px 0;
-                    color: #333;
-                    font-size: 16px;
-                    font-weight: 500;
-                ">Recently Viewed</h3>
-                <div>
-                    <h4 style="
-                        margin: 0;
-                        font-size: 14px;
-                        color: #333;
-                    ">${last_product_viewed.name}</h4>
-                </div>
-            </div>
-        `;
         
         // Form HTML content
         popup.innerHTML = `
@@ -180,7 +116,26 @@ async function renderPopUP() {
                     ">${themeData.title}</h2>
                 </div>
                 
-                ${lastProductHTML}
+                <!-- Last Product Viewed Section -->
+                <div style="
+                    margin-bottom: 20px;
+                    padding: 15px;
+                    background-color: #f7f9fc;
+                    border-radius: 6px;
+                    border-left: 3px solid ${themeData.color};
+                ">
+                    <h3 style="
+                        margin: 0 0 8px 0;
+                        color: #333;
+                        font-size: 16px;
+                        font-weight: 500;
+                    ">Last Product Viewed</h3>
+                    <p style="
+                        margin: 0;
+                        color: #555;
+                        font-size: 14px;
+                    ">${last_product_viewed}</p>
+                </div>
                 
                 <!-- Form -->
                 <form id="pet-details-form">
@@ -421,27 +376,22 @@ async function renderPopUP() {
             </div>
         `;
         
-        console.log("Popup HTML created");
-        
         // Remove any existing popups
         const existingOverlay = document.getElementById("pet-form-overlay");
         if (existingOverlay) {
-            console.log("Removing existing overlay");
             existingOverlay.remove();
         }
         
         // Add popup to the overlay, then add overlay to the DOM
         overlay.appendChild(popup);
         document.body.appendChild(overlay);
-        console.log("Popup added to DOM");
         
-        // Show the popup with animation (faster transition)
+        // Show the popup with animation
         setTimeout(() => {
-            console.log("Setting popup visible");
             overlay.style.opacity = "1";
             popup.style.opacity = "1";
             popup.style.transform = "scale(1)";
-        }, 10); // Very short timeout
+        }, 100);
         
         // Close popup function
         const closePopup = () => {
@@ -458,24 +408,19 @@ async function renderPopUP() {
         };
         
         // Add event listener to close button
-        popup.querySelector(".popup-close").addEventListener("click", function() {
-            console.log("Close button clicked");
-            closePopup();
-        });
+        popup.querySelector(".popup-close").addEventListener("click", closePopup);
         
         // Close when clicking outside the popup
-        overlay.addEventListener("click", function(e) {
+        overlay.addEventListener("click", (e) => {
             if (e.target === overlay) {
-                console.log("Overlay clicked");
                 closePopup();
             }
         });
         
         // Handle form submission
         const form = popup.querySelector("#pet-details-form");
-        form.addEventListener("submit", function(e) {
+        form.addEventListener("submit", (e) => {
             e.preventDefault();
-            console.log("Form submitted");
             
             // Get form data
             const formData = new FormData(form);
@@ -485,15 +430,18 @@ async function renderPopUP() {
                 petAge: formData.get("petAge"),
                 firstName: formData.get("firstName"),
                 lastName: formData.get("lastName"),
-                email: formData.get("email"),
-                lastProductViewed: {
-                    id: last_product_viewed.id,
-                    name: last_product_viewed.name
-                }
+                email: formData.get("email")
             };
             
-            // Log the data
-            console.log("Form data:", userData);
+            // Log the data (replace with your actual submission logic)
+            console.log("Form submitted:", userData);
+            
+            // You would typically send this data to your server here
+            // Example: fetch('/api/pet-details', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(userData)
+            // })
             
             // Store user data in localStorage
             localStorage.setItem('petCircleUserData', JSON.stringify(userData));
@@ -505,14 +453,13 @@ async function renderPopUP() {
             // Update analytics if available
             if (typeof analytics !== 'undefined') {
                 try {
-                    analytics.identify({
+                    analytics.identify( {
                         firstName: userData.firstName,
                         lastName: userData.lastName,
                         email: userData.email,
                         petType: userData.petType,
                         petName: userData.petName,
-                        petAge: userData.petAge,
-                        lastProductViewed: userData.lastProductViewed
+                        petAge: userData.petAge
                     });
                     
                     analytics.track('Pet Details Submitted', userData);
@@ -521,56 +468,11 @@ async function renderPopUP() {
                 }
             }
             
-            // Close popup after success
+            // Close popup after success (5 seconds)
             setTimeout(closePopup, 5000);
         });
         
     } catch (error) {
         console.error("Error rendering popup:", error);
-        alert("Error displaying popup: " + error.message); // Alert for debugging
     }
 }
-
-// Function to store the last viewed product ID
-function storeLastViewedProduct(productId) {
-    if (productId) {
-        localStorage.setItem('lastViewedProductId', productId);
-        console.log("Stored last viewed product ID:", productId);
-    }
-}
-
-// Helper function to check if we're on a product page
-function isProductPage() {
-    return window.location.pathname.includes('product.html') || 
-           window.location.pathname.endsWith('product');
-}
-
-// Initialize popup - make it run immediately
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, initializing popup");
-    
-    // If we're on a product page, store the product ID
-    if (isProductPage()) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        if (productId) {
-            storeLastViewedProduct(productId);
-        }
-    }
-    
-    // Force display popup after a minimal delay
-    console.log("Setting timeout to display popup");
-    setTimeout(function() {
-        console.log("Timeout triggered, showing popup");
-        renderPopUP();
-    }, 500);
-});
-
-// Add a global function to manually trigger the popup (for testing)
-window.showPetFormPopup = function() {
-    console.log("Manual popup trigger called");
-    renderPopUP();
-};
-
-// Ensure the function is available globally
-console.log("Script loaded. showPetFormPopup function available globally.");
