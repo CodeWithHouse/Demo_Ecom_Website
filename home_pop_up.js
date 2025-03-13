@@ -75,13 +75,13 @@ const formThemes = {
     },
     "Dog": {
         title: "Enjoy 10% Off For Your Dog Fur Baby",
-        buttonText: "Get Discounts",
+        buttonText: "Get Discounts Now",
         icon: "fas fa-dog",
         color: "#2196f3"
     },
     "Cat": {
-        title: "Personalize Your Cat's Experience",
-        buttonText: "Personalize",
+        title: "Care For Your Cat's",
+        buttonText: "Grab Offers Today!",
         icon: "fas fa-cat",
         color: "#9c27b0"
     },
@@ -132,7 +132,7 @@ async function renderPopUP() {
         }
         
         // Check if all required traits are available
-        if (most_frequent_tags === "default" || !last_product_viewed) {
+        if (most_frequent_tags === "default" || !last_product_viewed || !last_product_viewed.name) {
             console.warn("Required traits missing. Tags:", most_frequent_tags, "Last product:", last_product_viewed);
             return;
         }
@@ -174,7 +174,7 @@ async function renderPopUP() {
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
         
-        // Create the last product viewed section
+        // Create the last product viewed section - simplified to only show name
         const lastProductHTML = `
             <div style="
                 margin: 20px 0;
@@ -188,31 +188,11 @@ async function renderPopUP() {
                     color: #333;
                     font-size: 16px;
                     font-weight: 500;
-                ">Recently Viewed</h3>
-                <div style="
-                    display: flex;
-                    align-items: center;
-                ">
-                    <div style="
-                        width: 60px;
-                        height: 60px;
-                        min-width: 60px;
-                        margin-right: 15px;
-                        border-radius: 4px;
-                        overflow: hidden;
-                    ">
-                        <img src="${last_product_viewed.image}" 
-                            alt="${last_product_viewed.name}" 
-                            style="
-                                width: 100%;
-                                height: 100%;
-                                object-fit: contain;
-                            "
-                        >
-                    </div>
-                    <div>
+                ">Last Product Viewed</h3>
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="
-                            margin: 0 0 5px 0;
+                            margin: 0;
                             font-size: 14px;
                             color: #333;
                         ">${last_product_viewed.name}</h4>
