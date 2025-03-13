@@ -2,10 +2,24 @@
 if (typeof getUserProfile !== 'function') {
     window.getUserProfile = async function() {
         console.log("Using mock getUserProfile function");
+        // Include last_product_viewed in the mock profile
+        const lastProductId = localStorage.getItem('lastViewedProductId');
+        let lastProductViewed = null;
+        
+        if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
+            const product = window.productDatabase[lastProductId];
+            lastProductViewed = {
+                id: lastProductId,
+                name: product.name,
+                image: product.mainImage
+            };
+        }
+        
         return {
             traits: {
                 most_frequent_tags: "Dog",
-                most_frequent_pet_category: "Dog"
+                most_frequent_pet_category: "Dog",
+                last_product_viewed: lastProductViewed
             }
         };
     };
@@ -78,6 +92,20 @@ const formThemes = {
     }
 };
 
+// Helper function to get last viewed product from localStorage
+function getLastViewedProduct() {
+    const lastProductId = localStorage.getItem('lastViewedProductId');
+    
+    if (lastProductId && window.productDatabase && window.productDatabase[lastProductId]) {
+        return {
+            id: lastProductId,
+            ...window.productDatabase[lastProductId]
+        };
+    }
+    
+    return null;
+}
+
 async function renderPopUP() {
     try {
         console.log("Starting popup rendering process");
@@ -92,7 +120,8 @@ async function renderPopUP() {
             profile = { 
                 traits: { 
                     most_frequent_tags: "default",
-                    most_frequent_pet_category: "Dog"
+                    most_frequent_pet_category: "Dog",
+                    last_product_viewed: null
                 } 
             };
         }
@@ -102,14 +131,20 @@ async function renderPopUP() {
         if (profile && profile.traits && profile.traits.most_frequent_tags) {
             most_frequent_tags = profile.traits.most_frequent_tags;
         }
-        if (most_frequent_tags === "default") {
-            console.warn("No tags found, using default theme");
-            return;
-        }
+        
         // Get most frequent pet category (default to Dog if not set)
         let most_frequent_pet_category = "Dog";
         if (profile && profile.traits && profile.traits.most_frequent_pet_category) {
             most_frequent_pet_category = profile.traits.most_frequent_pet_category;
+        }
+        
+        // Get last viewed product 
+        let lastProductViewed = null;
+        if (profile && profile.traits && profile.traits.last_product_viewed) {
+            lastProductViewed = profile.traits.last_product_viewed;
+        } else {
+            // Try to get it directly from localStorage/productDatabase as a fallback
+            lastProductViewed = getLastViewedProduct();
         }
 
         if (most_frequent_tags === "default") {
@@ -120,6 +155,8 @@ async function renderPopUP() {
         
         console.log("Using theme:", most_frequent_tags);
         console.log("Using pet category:", most_frequent_pet_category);
+        console.log("Last product viewed:", lastProductViewed);
+        
         const themeData = formThemes[most_frequent_tags] || formThemes["default"];
         
         // Create popup overlay (background)
@@ -152,6 +189,61 @@ async function renderPopUP() {
         popup.style.opacity = "0";
         popup.style.transform = "scale(0.9)";
         popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+        
+        // Create last viewed product HTML if available
+        let lastProductHTML = '';
+        if (lastProductViewed && lastProductViewed.name && lastProductViewed.mainImage) {
+            lastProductHTML = `
+                <div style="
+                    margin: 20px 0;
+                    padding: 15px;
+                    background-color: #f9f9f9;
+                    border-radius: 6px;
+                    border: 1px solid #eee;
+                ">
+                    <h3 style="
+                        margin: 0 0 10px 0;
+                        color: #333;
+                        font-size: 16px;
+                        font-weight: 500;
+                    ">Recently Viewed</h3>
+                    <div style="
+                        display: flex;
+                        align-items: center;
+                    ">
+                        <div style="
+                            width: 60px;
+                            height: 60px;
+                            min-width: 60px;
+                            margin-right: 15px;
+                            border-radius: 4px;
+                            overflow: hidden;
+                        ">
+                            <img src="${lastProductViewed.mainImage}" 
+                                alt="${lastProductViewed.name}" 
+                                style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: contain;
+                                "
+                            >
+                        </div>
+                        <div>
+                            <h4 style="
+                                margin: 0 0 5px 0;
+                                font-size: 14px;
+                                color: #333;
+                            ">${lastProductViewed.name}</h4>
+                            <a href="product.html?id=${lastProductViewed.id}" style="
+                                font-size: 12px;
+                                color: ${themeData.color};
+                                text-decoration: none;
+                            ">View again</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
         
         // Form HTML content
         popup.innerHTML = `
@@ -187,6 +279,8 @@ async function renderPopUP() {
                         font-weight: 600;
                     ">${themeData.title}</h2>
                 </div>
+                
+                ${lastProductHTML}
                 
                 <!-- Form -->
                 <form id="pet-details-form">
@@ -481,7 +575,11 @@ async function renderPopUP() {
                 petAge: formData.get("petAge"),
                 firstName: formData.get("firstName"),
                 lastName: formData.get("lastName"),
-                email: formData.get("email")
+                email: formData.get("email"),
+                lastProductViewed: lastProductViewed ? {
+                    id: lastProductViewed.id,
+                    name: lastProductViewed.name
+                } : null
             };
             
             // Log the data (replace with your actual submission logic)
@@ -504,13 +602,14 @@ async function renderPopUP() {
             // Update analytics if available
             if (typeof analytics !== 'undefined') {
                 try {
-                    analytics.identify( {
+                    analytics.identify({
                         firstName: userData.firstName,
                         lastName: userData.lastName,
                         email: userData.email,
                         petType: userData.petType,
                         petName: userData.petName,
-                        petAge: userData.petAge
+                        petAge: userData.petAge,
+                        lastProductViewed: userData.lastProductViewed
                     });
                     
                     analytics.track('Pet Details Submitted', userData);
@@ -528,6 +627,15 @@ async function renderPopUP() {
     }
 }
 
+// Update the window object with a function to store the last viewed product ID
+// This will be called when product pages are loaded
+window.storeLastViewedProduct = function(productId) {
+    if (productId) {
+        localStorage.setItem('lastViewedProductId', productId);
+        console.log("Stored last viewed product ID:", productId);
+    }
+};
+
 // Always show popup during development (remove for production)
 function showPopupNow() {
     console.log("Forcing popup to show");
@@ -538,6 +646,15 @@ function showPopupNow() {
 // Initialize popup
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, initializing popup");
+    
+    // If we're on a product page, store the product ID
+    if (isProductPage()) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        if (productId) {
+            window.storeLastViewedProduct(productId);
+        }
+    }
     
     // For immediate testing, uncomment this line:
     showPopupNow();
@@ -562,6 +679,13 @@ function shouldShowPopup() {
     }
     
     return false;
+}
+
+// Helper function to check if we're on a product page
+// Reusing the same function from script.js
+function isProductPage() {
+    return window.location.pathname.includes('product.html') || 
+           window.location.pathname.endsWith('product');
 }
 
 // Add a global function to manually trigger the popup (for testing)
