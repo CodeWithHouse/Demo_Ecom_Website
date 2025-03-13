@@ -75,13 +75,13 @@ const formThemes = {
     },
     "Dog": {
         title: "Enjoy 10% Off For Your Dog Fur Baby",
-        buttonText: "Get Discounts Now",
+        buttonText: "Get Discounts",
         icon: "fas fa-dog",
         color: "#2196f3"
     },
     "Cat": {
-        title: "Care For Your Cat's",
-        buttonText: "Grab Offers Today!",
+        title: "Personalize Your Cat's Experience",
+        buttonText: "Personalize",
         icon: "fas fa-cat",
         color: "#9c27b0"
     },
@@ -129,6 +129,29 @@ async function renderPopUP() {
         let last_product_viewed = null;
         if (profile && profile.traits && profile.traits.last_product_viewed) {
             last_product_viewed = profile.traits.last_product_viewed;
+        }
+        
+        // For development/testing - fallback to product database if last_product_viewed is missing
+        // Remove this section for production code
+        if (!last_product_viewed && window.productDatabase) {
+            const lastProductId = localStorage.getItem('lastViewedProductId');
+            if (lastProductId && window.productDatabase[lastProductId]) {
+                console.log("Using fallback for last_product_viewed from localStorage");
+                last_product_viewed = {
+                    id: lastProductId,
+                    name: window.productDatabase[lastProductId].name
+                };
+            } else {
+                // Use the first product as a last resort
+                const firstProductId = Object.keys(window.productDatabase)[0];
+                if (firstProductId) {
+                    console.log("Using first product as fallback for last_product_viewed");
+                    last_product_viewed = {
+                        id: firstProductId,
+                        name: window.productDatabase[firstProductId].name
+                    };
+                }
+            }
         }
         
         // Check if all required traits are available
@@ -188,7 +211,7 @@ async function renderPopUP() {
                     color: #333;
                     font-size: 16px;
                     font-weight: 500;
-                ">Last Product Viewed</h3>
+                ">Recently Viewed</h3>
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="
@@ -593,6 +616,11 @@ function storeLastViewedProduct(productId) {
     if (productId) {
         localStorage.setItem('lastViewedProductId', productId);
         console.log("Stored last viewed product ID:", productId);
+        
+        // If we have product database available, log product details
+        if (window.productDatabase && window.productDatabase[productId]) {
+            console.log("Product details:", window.productDatabase[productId].name);
+        }
     }
 }
 
@@ -606,6 +634,17 @@ function isProductPage() {
 function showPopupNow() {
     console.log("Forcing popup to show");
     localStorage.removeItem('lastPopupShown');
+    
+    // For testing purposes, manually set up a last viewed product if not available
+    if (!localStorage.getItem('lastViewedProductId') && window.productDatabase) {
+        // Use the first product in the database as a fallback
+        const firstProductId = Object.keys(window.productDatabase)[0];
+        if (firstProductId) {
+            console.log("Setting fallback product ID for testing:", firstProductId);
+            localStorage.setItem('lastViewedProductId', firstProductId);
+        }
+    }
+    
     renderPopUP();
 }
 
@@ -622,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // For immediate testing, uncomment this line:
+    // For development and testing, force the popup to show
     showPopupNow();
     
     // For production use this instead:
