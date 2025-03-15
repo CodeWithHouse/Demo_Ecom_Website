@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - PetCircle</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="login.css">
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <script>
+        !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE";;analytics.SNIPPET_VERSION="5.2.0";
+        analytics.load("QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE");
+        analytics.page();
+    }}();
+    </script>
+    <script defer src="/assets/js/profile.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/">
+                    <img src="/assets/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="active">Products <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#">Dog</a>
+                            <a href="#">Cat</a>
+                            <a href="#">Other Pets</a>
+                            <a href="#">Pharmacy</a>
+                            <a href="#">Insurance</a>
+                            <a href="#">Deals</a>
+                        </div>
+                    </li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart">
+                    <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                </div>
+                <div class="account dropdown">
+                    <a href="#" id="account-icon"><i class="fas fa-user"></i></a>
+                    <div class="account-dropdown">
+                        <!-- Content will be dynamically populated via JavaScript -->
+                    </div>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="login-page">
+            <!-- Fun background shapes -->
+            <div class="bg-shape bg-shape-1"></div>
+            <div class="bg-shape bg-shape-2"></div>
+            
+            <!-- More decorative paw prints -->
+            <div class="paw-decoration paw-1"><i class="fas fa-paw"></i></div>
+            <div class="paw-decoration paw-2"><i class="fas fa-paw"></i></div>
+            <div class="paw-decoration paw-3"><i class="fas fa-paw"></i></div>
+            <div class="paw-decoration paw-4"><i class="fas fa-paw"></i></div>
+            <div class="paw-decoration paw-5"><i class="fas fa-paw"></i></div>
+            
+            <div class="login-container">
+                <div class="login-header">
+
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to manage your pet family</p>
+                </div>
+                
+                <div class="login-card">
+                    <!-- Fun pet mascot peaking from corner -->
+                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a" alt="Cute Dog" class="pet-mascot">
+                    
+                    <div class="login-card-header">
+                       
+                    </div>
+                    
+                    <div class="login-card-body">
+                        <form id="login-form" action="#" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-group">
+                                    <span class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                                    <span class="toggle-password" id="toggle-password">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-footer">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="remember-me" name="remember-me">
+                                    <label for="remember-me">Remember me</label>
+                                </div>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+                            
+                            <button type="submit" class="btn-login">
+                                <i class="fas fa-paw"></i> Let's Go!
+                            </button>
+                        </form>
+                        
+                        <div class="or-divider">OR</div>
+                        
+                        <div class="social-login">
+                            <button class="social-btn facebook-btn">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button class="social-btn google-btn">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="social-btn apple-btn">
+                                <i class="fab fa-apple"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="signup-link">
+                        <p>New to PetCircle? <a href="/register/">Create an account!</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>PetCircle</h3>
+                <p>Your one-stop shop for all your pet needs. Quality products, happy pets.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Dogs</a></li>
+                    <li><a href="#">Cats</a></li>
+                    <li><a href="#">Fish</a></li>
+                    <li><a href="#">Birds</a></li>
+                    <li><a href="#">Small Pets</a></li>
+                    <li><a href="#">Reptiles</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <address>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animalia, CA 94103</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@petcircle.com</p>
+                </address>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PetCircle. All rights reserved.</p>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to JavaScript file -->
+    <script src="/assets/js/auth.js"></script>
+    <script src="login.js"></script>
+
+    
+</body>
+</html>

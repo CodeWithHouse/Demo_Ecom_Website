@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetCircle - Your Pet's Favorite Store</title>
     <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <!-- Font Awesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
@@ -13,22 +13,23 @@
         !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE";;analytics.SNIPPET_VERSION="5.2.0";
         analytics.load("QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE");
         analytics.page();
-        analytics.identify();
         }}();
-      </script>
+    </script>
+    <script defer src="/assets/js/profile.js"></script>
+    <script defer src="/assets/js/fakeapi.js"></script>
 
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
+                <a href="/">
+                    <img src="/assets/images/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
                 </a>
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="/" class="active">Home</a></li>
                     <li class="dropdown">
                         <a href="#">Products <i class="fas fa-chevron-down"></i></a>
                         <div class="dropdown-content">
@@ -52,8 +53,11 @@
                 <div class="cart">
                     <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
                 </div>
-                <div class="account">
-                    <a href="#"><i class="fas fa-user"></i></a>
+                <div class="account dropdown">
+                    <a href="#" id="account-icon"><i class="fas fa-user"></i></a>
+                    <div class="account-dropdown">
+                        <!-- Content will be dynamically populated via JavaScript -->
+                    </div>
                 </div>
                 <div class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -67,12 +71,12 @@
         <section class="hero-carousel">
             <div class="carousel-container">
                <div class="carousel-slide active">
-                <img src="assets/banners/4_Carousel_Desktop_Paw-and-Spoon.jpg" alt="Banner 1">
+                <img src="/assets/images/banners/4_Carousel_Desktop_Paw-and-Spoon.jpg" alt="Banner 1">
                 <div class="hero-content">
                 </div>
             </div>
             <div class="carousel-slide">
-                <img src="assets/banners/Carousel_Desktop_App.jpg" alt="Banner 2">
+                <img src="/assets/images/banners/Carousel_Desktop_App.jpg" alt="Banner 2">
                 <div class="hero-content">
                 </div>
             </div>
@@ -89,7 +93,7 @@
                 <div class="product-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="assets/products/hs-weight-small/main_hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food_.png" alt="Adult Perfect Weight Small And Mini Dry Dog Food">
+                            <img src="/assets/images/products/hs-weight-small/main_hills-science-diet-adult-perfect-weight-small-and-mini-dry-dog-food_.png" alt="Adult Perfect Weight Small And Mini Dry Dog Food">
                         </div>
                         <div class="product-info">
                             <h3>Adult Perfect Weight Small And Mini Dry Dog Food</h3>
@@ -104,12 +108,12 @@
                             <div class="product-price">
                                 <span class="current-price">$34.99</span>
                             </div>
-                            <a id="productViewedButton" href="product.html?id=1" class="btn secondary-btn">View Product</a>
+                            <a id="productViewedButton" href="/product/?id=1" class="btn secondary-btn">View Product</a>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="assets/products/hs-dry-dog-food/main-diet-senior.png" alt="Senior 7 Plus Small And Mini Dry Dog Food">
+                            <img src="/assets/images/products/hs-dry-dog-food/main-diet-senior.png" alt="Senior 7 Plus Small And Mini Dry Dog Food">
                         </div>
                         <div class="product-info">
                             <h3>Senior 7 Plus Small And Mini Dry Dog Food</h3>
@@ -124,13 +128,13 @@
                             <div class="product-price">
                                 <span class="current-price">$32.99</span>
                             </div>
-                            <a id="productViewedButton" href="product.html?id=2" class="btn secondary-btn">View Product</a>
+                            <a id="productViewedButton" href="/product/?id=2" class="btn secondary-btn">View Product</a>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-badge new">New</div>
                         <div class="product-image">
-                            <img src="assets/products/wet-cat-food-pouches/wet-cat-food-pouches.png" alt="As Good As It Looks Sensations Jelly Adult Wet Cat Food Pouches">
+                            <img src="/assets/images/products/wet-cat-food-pouches/wet-cat-food-pouches.png" alt="As Good As It Looks Sensations Jelly Adult Wet Cat Food Pouches">
                         </div>
                         <div class="product-info">
                             <h3>As Good As It Looks Sensations Jelly Adult Wet Cat Food Pouches</h3>
@@ -145,12 +149,12 @@
                             <div class="product-price">
                                 <span class="current-price">$58.49</span>
                             </div>
-                            <a id="productViewedButton" href="product.html?id=3" class="btn secondary-btn">View Product</a>
+                            <a id="productViewedButton" href="/product/?id=3" class="btn secondary-btn">View Product</a>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/assets/products/bed-round-cuddler/main-cuddler.png" alt="Everyday Cosy Pet Bed Round Cuddler">
+                            <img src="/assets/images/products/bed-round-cuddler/main-cuddler.png" alt="Everyday Cosy Pet Bed Round Cuddler">
                         </div>
                         <div class="product-info">
                             <h3>Everyday Cosy Pet Bed Round Cuddler</h3>
@@ -165,7 +169,7 @@
                             <div class="product-price">
                                 <span class="current-price">$29.99</span>
                             </div>
-                            <a id="productViewedButton" href="product.html?id=4" class="btn secondary-btn">View Product</a>
+                            <a id="productViewedButton" href="/product/?id=4" class="btn secondary-btn">View Product</a>
                         </div>
                     </div>
                 </div>
@@ -181,42 +185,42 @@
                 </div>
                 <div class="categories-grid">
                     <div class="category-card">
-                        <img src="assets/categories/Dog-hover.png" alt="Dogs">
+                        <img src="/assets/images/categories/Dog-hover.png" alt="Dogs">
                         <div class="category-info">
                             <h3>Dogs</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="category-card">
-                        <img src="assets/categories/Cat-hover.png" alt="Cats">
+                        <img src="/assets/images/categories/Cat-hover.png" alt="Cats">
                         <div class="category-info">
                             <h3>Cats</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="category-card">
-                        <img src="assets/categories/Puppy-hover.png" alt="Puppy">
+                        <img src="/assets/images/categories/Puppy-hover.png" alt="Puppy">
                         <div class="category-info">
                             <h3>Puppies</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="category-card">
-                        <img src="assets/categories/Bird-hover.png" alt="Birds">
+                        <img src="/assets/images/categories/Bird-hover.png" alt="Birds">
                         <div class="category-info">
                             <h3>Birds</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="category-card">
-                        <img src="assets/categories/Small Pets-hover.png" alt="Small Pets">
+                        <img src="/assets/images/categories/Small Pets-hover.png" alt="Small Pets">
                         <div class="category-info">
                             <h3>Small Pets</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="category-card">
-                        <img src="assets/categories/Fish-hover.png" alt="Fish">
+                        <img src="/assets/images/categories/Fish-hover.png" alt="Fish">
                         <div class="category-info">
                             <h3>Fish</h3>
                             <a href="#" class="btn outline-btn">Shop Now</a>
@@ -293,11 +297,11 @@
         </div>
     </footer>
 
+    
     <!-- Link to JavaScript file -->
-    <script src="script.js"></script>
-    <script src="profile_api.js"></script>
-    <script src="home_analytic.js"></script>
-    <script src="home_pop_up.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="home/script.js"></script>
+    <script src="home/popup.js"></script>
 
 </body>
 </html>
