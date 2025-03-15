@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - PetCircle</title>
     <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <!-- Font Awesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
@@ -13,22 +13,24 @@
         !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE";;analytics.SNIPPET_VERSION="5.2.0";
         analytics.load("QTSfYF3KPlIBHaceZMBCeQGaPIuwxobE");
         analytics.page();
-        analytics.identify();
         }}();
-      </script>
+    </script>
+
+    <script defer src="/assets/js/profile.js"></script>
+    <script defer src="/assets/js/fakeapi.js"></script>
 
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
+                <a href="/">
+                    <img src="/assets/images/logo/petcircle-app-icon.svg" alt="PetCircle Logo">
                 </a>
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li class="dropdown">
                         <a href="#" class="active">Products <i class="fas fa-chevron-down"></i></a>
                         <div class="dropdown-content">
@@ -52,8 +54,11 @@
                 <div class="cart">
                     <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
                 </div>
-                <div class="account">
-                    <a href="#"><i class="fas fa-user"></i></a>
+                <div class="account dropdown">
+                    <a href="#" id="account-icon"><i class="fas fa-user"></i></a>
+                    <div class="account-dropdown">
+                        <!-- Content will be dynamically populated via JavaScript -->
+                    </div>
                 </div>
                 <div class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -67,7 +72,7 @@
         <section class="breadcrumb">
             <div class="container">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="#">Products</a></li>
                     <li><a href="#" id="product-category-breadcrumb">Dogs</a></li>
                     <li class="current" id="product-name-breadcrumb">Product Name</li>
@@ -528,9 +533,9 @@
     </footer>
 
     <!-- Link to JavaScript file -->
-    <script src="script.js"></script>
-    <script src="profile_api.js"></script>
-    <script src="product_analytic.js"></script>
-    
+    <script src="product.js"></script>
+    <script src="analytics.js"></script>
+    <script src="/assets/js/auth.js"></script>
+
 </body>
 </html>

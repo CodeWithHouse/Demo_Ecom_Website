@@ -1,0 +1,571 @@
+.signup-page {
+  background: linear-gradient(to right, rgba(232, 253, 254, 0.7), rgba(255, 255, 255, 0.9));
+  min-height: 80vh;
+  padding: var(--spacing-xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+}
+
+.signup-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+  animation: bounce-subtle 3s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.signup-logo img {
+  width: 60px;
+  height: 60px;
+  filter: brightness(0) invert(1);
+}
+
+.signup-header h1 {
+  margin-bottom: 5px;
+  position: relative;
+  display: inline-block;
+  font-size: 2.2rem;
+  color: var(--primary-dark);
+}
+
+.signup-header h1::after {
+  content: "🐶";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  animation: hop 3s ease-in-out infinite;
+}
+
+.signup-card {
+  background-color: var(--bg-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.signup-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.signup-card-header {
+  background: var(--primary-dark);
+  padding: var(--spacing-lg);
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-card-header::before,
+.signup-card-header::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.signup-card-header::before {
+  width: 200px;
+  height: 200px;
+  top: -100px;
+  left: -100px;
+}
+
+.signup-card-header::after {
+  width: 150px;
+  height: 150px;
+  bottom: -75px;
+  right: -75px;
+}
+
+.signup-card-body {
+  padding: var(--spacing-lg);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-column {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.input-group input, 
+.input-group select {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 2px solid var(--bg-dark);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(128, 246, 250, 0.2);
+  outline: none;
+}
+
+.input-group input:focus + .input-icon,
+.input-group select:focus + .input-icon {
+  color: var(--primary-color);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+.password-strength {
+  height: 5px;
+  background: #e0e0e0;
+  margin-top: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+.terms-group {
+  margin: var(--spacing-lg) 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.checkbox-container input {
+  margin-right: 10px;
+  margin-top: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-container input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.checkbox-container input:checked::after {
+  content: '\f00c';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  font-size: 12px;
+  animation: checkmark 0.2s ease-in-out;
+}
+
+.checkbox-container label {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.checkbox-container a {
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.checkbox-container a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.btn-signup {
+  width: 100%;
+  background: var(--primary-dark);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-signup i {
+  margin-right: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-signup:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.btn-signup::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.btn-signup:hover::after {
+  animation: ripple 0.6s ease-out;
+}
+
+.btn-signup:active {
+  animation: bounce 0.3s ease;
+}
+
+.or-divider {
+  text-align: center;
+  position: relative;
+  margin: var(--spacing-lg) 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: var(--border-color);
+}
+
+.or-divider::before {
+  left: 0;
+}
+
+.or-divider::after {
+  right: 0;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.social-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.social-btn:hover {
+  transform: translateY(-3px) rotate(10deg);
+  box-shadow: var(--shadow-md);
+}
+
+.social-btn:active {
+  transform: translateY(0) rotate(-5deg);
+  transition: transform 0.1s ease;
+}
+
+.facebook-btn {
+  color: #1877f2;
+}
+
+.google-btn {
+  color: #ea4335;
+}
+
+.apple-btn {
+  color: #000;
+}
+
+.signin-link {
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: var(--bg-light);
+  border-top: 1px solid var(--border-color);
+}
+
+.signin-link a {
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signin-link a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Fun background elements */
+.bg-shape {
+  position: absolute;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+.bg-shape-1 {
+  top: 10%;
+  left: 5%;
+  width: 100px;
+  height: 100px;
+  background-color: var(--primary-light);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: morph 8s ease-in-out infinite;
+}
+
+.bg-shape-2 {
+  bottom: 10%;
+  right: 5%;
+  width: 150px;
+  height: 150px;
+  background-color: var(--secondary-color);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 12s ease-in-out infinite alternate;
+}
+
+.bg-shape-3 {
+  top: 40%;
+  right: 10%;
+  width: 80px;
+  height: 80px;
+  background-color: var(--accent-color);
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: float 15s ease-in-out infinite;
+}
+
+.paw-decoration {
+  position: absolute;
+  color: var(--primary-light);
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.paw-1 {
+  top: 10%;
+  left: 5%;
+  font-size: 2rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+.paw-2 {
+  top: 60%;
+  right: 5%;
+  font-size: 1.5rem;
+  animation: float 5s ease-in-out infinite;
+}
+
+.paw-3 {
+  bottom: 15%;
+  left: 10%;
+  font-size: 1.8rem;
+  animation: float 6s ease-in-out infinite;
+}
+
+.paw-4 {
+  top: 40%;
+  right: 15%;
+  font-size: 1.3rem;
+  animation: float-diagonal 6s ease-in-out infinite;
+  color: var(--secondary-color);
+  opacity: 0.6;
+}
+
+.paw-5 {
+  bottom: 30%;
+  left: 25%;
+  font-size: 2.2rem;
+  animation: float-diagonal 8s ease-in-out infinite 1s;
+  color: var(--accent-color);
+  opacity: 0.5;
+  transform: rotate(45deg);
+}
+
+/* Fun pet decoration */
+.pet-deco {
+  position: absolute;
+  z-index: 2;
+}
+
+.pet-cat {
+  bottom: -15px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  transform: rotate(-10deg);
+  transition: all 0.5s ease;
+  animation: peek-cat 10s ease-in-out infinite;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.pet-cat img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float-diagonal {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(15px, -15px) rotate(15deg); }
+  50% { transform: translate(0, -25px) rotate(0deg); }
+  75% { transform: translate(-15px, -15px) rotate(-15deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes morph {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(20); opacity: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes checkmark {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  50% { transform: translate(-50%, -50%) scale(1.4); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes peek-cat {
+  0%, 100% { transform: rotate(-10deg) translateY(0); }
+  10% { transform: rotate(-15deg) translateY(-8px); }
+  15% { transform: rotate(-5deg) translateY(-12px); }
+  25% { transform: rotate(-10deg) translateY(-8px); }
+  35% { transform: rotate(-15deg) translateY(0); }
+  70% { transform: rotate(-10deg) translateY(0); }
+}
+
+@keyframes hop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-10px) rotate(10deg); }
+  60% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .signup-container {
+      padding: var(--spacing-md);
+  }
+  
+  .signup-card-header, .signup-card-body {
+      padding: var(--spacing-md);
+  }
+  
+  .form-row {
+      flex-direction: column;
+      gap: 0;
+  }
+}

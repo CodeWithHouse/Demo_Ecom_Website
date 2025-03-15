@@ -1,2 +1,0 @@
-analytics.track("Home Viewed");
-
