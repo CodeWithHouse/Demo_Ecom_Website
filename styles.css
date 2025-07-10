@@ -1,9 +1,9 @@
 /* ================ GLOBAL STYLES ================ */
 :root {
     /* Supertails Brand Color palette */
-    --primary-color: #00C851;          /* Supertails vibrant green */
-    --primary-dark: #00A041;           /* Darker green for hover states */
-    --primary-light: #66D98B;          /* Light green for accents */
+    --primary-color: #CBFF22;          /* Supertails bright lime green */
+    --primary-dark: #B8E61F;           /* Darker green for hover states */
+    --primary-light: #D4FF55;          /* Light green for accents */
     --secondary-color: #FF6B35;        /* Warm orange accent */
     --accent-color: #FFB84D;           /* Golden orange for highlights */
     --text-color: #2C2C2C;            /* Dark charcoal for readability */
@@ -37,10 +37,10 @@
     --radius-round: 50%;
     
     /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 200, 81, 0.12);
-    --shadow-md: 0 4px 6px rgba(0, 200, 81, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 200, 81, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 200, 81, 0.1);
+    --shadow-sm: 0 1px 3px rgba(203, 255, 34, 0.12);
+    --shadow-md: 0 4px 6px rgba(203, 255, 34, 0.1);
+    --shadow-lg: 0 10px 15px rgba(203, 255, 34, 0.1);
+    --shadow-xl: 0 20px 25px rgba(203, 255, 34, 0.1);
     
     /* Transitions */
     --transition-fast: 0.2s ease;
@@ -297,7 +297,7 @@
     outline: none;
     border-color: var(--primary-color);
     width: 250px;
-    box-shadow: 0 0 0 2px rgba(0, 200, 81, 0.1);
+    box-shadow: 0 0 0 2px rgba(203, 255, 34, 0.1);
   }
   
   .search-bar button {
@@ -397,7 +397,7 @@
     position: relative;
     height: 500px;
     width: 100%;
-    background: linear-gradient(135deg, rgba(0, 200, 81, 0.9), rgba(255, 107, 53, 0.8)), url('https://via.placeholder.com/1200x500');
+    background: var(--primary-color);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -407,7 +407,7 @@
   }
   
   .hero-content {
-    color: white;
+    color: var(--text-color);
     max-width: 700px;
     padding: 0 var(--spacing-lg);
   }
@@ -415,7 +415,7 @@
   .hero h1 {
     font-size: 3rem;
     margin-bottom: var(--spacing-md);
-    color: white;
+    color: var(--text-color);
   }
   
   .hero p {
@@ -558,8 +558,8 @@
     left: 0;
     width: 100%;
     padding: var(--spacing-md);
-    background: linear-gradient(to top, rgba(0, 200, 81, 0.9), rgba(0, 200, 81, 0.3));
-    color: white;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -567,14 +567,14 @@
   }
   
   .category-info h3 {
-    color: white;
+    color: var(--text-color);
     margin-bottom: var(--spacing-sm);
   }
   
   /* ================ NEWSLETTER SECTION ================ */
   .newsletter {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     text-align: center;
   }
   
@@ -584,7 +584,7 @@
   }
   
   .newsletter h2 {
-    color: white;
+    color: var(--text-color);
     margin-bottom: var(--spacing-sm);
   }
   
@@ -677,7 +677,7 @@
     align-items: center;
     width: 36px;
     height: 36px;
-    background-color: rgba(0, 200, 81, 0.2);
+    background-color: rgba(203, 255, 34, 0.2);
     color: white;
     border-radius: var(--radius-round);
     transition: var(--transition-fast);
