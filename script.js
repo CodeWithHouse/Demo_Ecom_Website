@@ -20,12 +20,11 @@ const productDatabase = {
         tags: 'Dog, Food, Premium, Nutrition',
         rating: 4.5,
         reviews: 42,
-        mainImage: 'assets/products/Orijen-Original-Dog-Dry-Food/Orijen-Original-Dog-Dry-Food-1.png',
+        mainImage: 'assets/products/orijen-original-dog-food/orijen-original-dog-food-1.png',
         thumbnails: [
-            'assets/products/Orijen-Original-Dog-Dry-Food/Orijen-Original-Dog-Dry-Food-1.png',
-            'assets/products/orgien-dog-food/orijen-original-dog-food-2.png',
-            'assets/products/orgien-dog-food/orijen-original-dog-food-3.png',
-            'assets/products/orgien-dog-food/orijen-original-dog-food-4.png',
+            'assets/products/orijen-original-dog-food/orijen-original-dog-food-2.png',
+            'assets/products/orijen-original-dog-food/orijen-original-dog-food-3.png',
+            'assets/products/Orijen-Original-Dog-Dry-Food/orijen-original-dog-food-4.png',
         ],
         variants: [
             { name: '17kg', price: '₹16999', originalPrice: null },
@@ -54,10 +53,9 @@ const productDatabase = {
         reviews: 87,
         mainImage: 'assets/products/Royal Canin Maxi Adult Dog Wet Food / Royal Canin Maxi Adult Dog Wet Food-1.jpg',
         thumbnails: [
-            'assets/products/Royal Canin Maxi Adult Dog Wet Food / Royal Canin Maxi Adult Dog Wet Food-1.jpg',
-            'assets/products/royal-canin-maxi-adult-dog-food/royal-canin-maxi-adult-dog-food-2.jpg',
-            'assets/products/royal-canin-maxi-adult-dog-food/royal-canin-maxi-adult-dog-food-3.jpg',
-            'assets/products/roy    al-canin-maxi-adult-dog-food/royal-canin-maxi-adult-dog-food-4.jpg'
+            'assets/products/Royal Canin Maxi Adult Dog Wet Food/Royal Canin Maxi Adult Dog Wet Food -2.jpg',
+            'assets/products/Royal Canin Maxi Adult Dog Wet Food/Royal Canin Maxi Adult Dog Wet Food -3.jpg',
+            'assets/products/Royal Canin Maxi Adult Dog Wet Food / Royal Canin Maxi Adult Dog Wet Food -4.jpg.jpg'
         ],
         variants: [
             { name: '30x140g', price: '₹4154', originalPrice: null },
@@ -84,11 +82,11 @@ const productDatabase = {
         tags: 'Cat, Nutrition, Food, Premium',
         rating: 4.0,
         reviews: 23,
-        mainImage: 'assets/products/famina-cat-food/farmina-cat-food.png',
+        mainImage: '/assets/products/Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food /Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food-1.jpg',
         thumbnails: [
-            'assets/products/famina-cat-food/farmina-cat-food-2.png',
-            'assets/products/famina-cat-food/farmina-cat-food-3.png',
-            'assets/products/famina-cat-food/farmina-cat-food-4.png',
+            'a/assets/products/Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food /Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food-2.jpg',
+            '/assets/products/Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food /Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food-3.jpgg',
+            '/assets/products/Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food /Farmina N&D Prime Chicken & Pomegranate Grain Free Adult Cat Dry Food-4.jpg',
         ],
         variants: [
             { name: '3kg', price: '₹4491', originalPrice: null },
@@ -115,12 +113,11 @@ const productDatabase = {
         tags: 'Dog, Leashes, Collar, Harness',
         rating: 3.5,
         reviews: 16,
-        mainImage: '/assets/products/dogbow-collar/main-collar.png',
+        mainImage: '/assets/products/Dogbow Multi Stripe Martingale Collar For Dogs/collar-1.png',
         thumbnails: [
-            '/assets/products/dogbow-collar/collar-1.png',
-            '/assets/products/dogbow-collar/collar-2.png',
-            '/assets/products/dogbow-collar/collar-3.png',
-            '/assets/products/dogbow-collar/collar-4.png'
+            '/assets/products/Dogbow Multi Stripe Martingale Collar For Dogs/collar-2.png',
+            '/assets/products/Dogbow Multi Stripe Martingale Collar For Dogs/collar-3.png',
+            '/assets/products/Dogbow Multi Stripe Martingale Collar For Dogs/collar-4.png',
         ],
         variants: [
             { name: 'M', price: '₹784', originalPrice: null },
